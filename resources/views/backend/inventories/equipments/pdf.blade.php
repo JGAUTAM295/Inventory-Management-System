@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<div class="wrapper contanier py-5" style="margin: 5% 10%;">
+<div class="wrapper contanier py-5" style="margin: 5% 5%;">
   <!-- Main content -->
   <section class="invoice">
     <!-- title row -->
@@ -24,22 +24,26 @@
       <!-- /.col -->
     </div>
     <!-- info row -->
-    <div class="row invoice-info">
-      <div class="col-sm-8 invoice-col mb-4">
-        <h4><strong>Title: {{ ucwords($equipment->title) ?? '' }}</strong><br></h4>
-      </div>
-      <div class="col-sm-4 invoice-col mb-4">
-      <img src="data:image/png;base64, {!! $qrcode !!}">
-      <!-- {!! QrCode::size(300)->generate('https://techvblogs.com/blog/generate-qr-code-laravel-8') !!} -->
-      </div>
-      <!-- /.col -->
-    </div>
+   <!-- {!! QrCode::size(300)->generate('https://techvblogs.com/blog/generate-qr-code-laravel-8') !!} -->
     <!-- /.row -->
-
+    <table class="table table-striped" style="width:100%;">
+        <tr>
+            <td>
+                <div class="invoice-col mb-4" style="width:100%;">
+                    <h4><strong>Title: {{ ucwords($equipment->title) ?? '' }}</strong><br></h4>
+                </div>
+            </td>
+            <td>
+                <div class="invoice-col mb-4" style="width:30%;">
+                    <img src="data:image/png;base64, {!! $qrcode !!}">
+                </div>
+            </td>
+        </tr>
+    </table>
     <!-- Table row -->
-    <div class="row">
+    <div class="row" style="margin-top:10%;">
         <div class="col-12 table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped" style="font-size: 20px;">
                 <thead>
                     @foreach(json_decode($equipment->equipment_info, true) as $key => $value)
                     <tr>
