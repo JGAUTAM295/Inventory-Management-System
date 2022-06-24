@@ -15,7 +15,8 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>Equipments  <a href="{{ route('equipment.create',['id'=>$inventory->id]); }}"><button class="btn btn-primary">Add Equipment</button></a></h3>
+            <h3>Equipments <a href="{{ route('equipment.create',['id'=>$inventory->id]); }}"><button class="btn btn-primary">Add Equipment</button></a> 
+            <a href="{{ route('taxonomy.index'); }}"><button class="btn btn-primary">Custom Fields</button></a></h3>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -40,7 +41,7 @@
                   <thead>
                   <tr>
                     <th>No</th>
-                    <th>Name</th>
+                    <th>Type</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -49,15 +50,21 @@
                     @if($equipments)
                     @foreach($equipments as $key => $equipment)
                   <tr>
-                    <td>{{ ++$i }}</td>
-                    <td>{{ucwords($equipment->name) ?? ''}}</td>
+                    <td>{{ $key+1 }}</td>
+                    <td>
+                      @foreach(json_decode($equipment->equipment_info, true) as $key => $value)
+                      @if ($key == 'type') 
+                      {{ucwords($value) ?? ''}}
+                      @endif
+                      @endforeach
+                    </td>
                     <td class="project-state"> @if($equipment->status == '1') <span class="badge badge-success">Active</span>@elseif($equipment->status == '2') <span class="badge badge-danger">Deactive</span>@endif</td>
                     <td class="project-actions">
-                      <a class="btn btn-primary btn-sm" href="#">
-                          <i class="fas fa-plus"></i> Add Equipments
+                      <a class="btn btn-primary btn-sm" href="{{route('equipment.downloadPDF',['id'=>$inventory->id,'eid'=>$equipment->id])}}" target="_blank">
+                        <i class="fas fa-pdf"></i> View PDF
                       </a>
                       <a class="btn btn-info btn-sm" href="{{ route('equipment.edit',['id'=>$inventory->id,'eid'=>$equipment->id]) }}">
-                          <i class="fas fa-pencil-alt"></i>  Edit
+                          <i class="fas fa-pencil-alt"></i> Edit
                       </a>
                       <form method="POST" action="{{ route('equipment.destroy',['id'=>$inventory->id,'eid'=>$equipment->id]); }}" style="display: inline-block;">
                         @csrf
@@ -113,7 +120,7 @@
           var name = $(this).data("name");
           event.preventDefault();
           swal({
-              title: `Are you sure you want to delete this equipment ?`,
+              title: `Are you sure you want to delete this equipment?`,
               text: "If you delete this, it will be gone forever.",
               icon: "warning",
               buttons: true,

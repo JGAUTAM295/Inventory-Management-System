@@ -2,7 +2,14 @@
 @section('pagetitle', 'Equipment Add')
 
 @section('head')
-
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="{{ URL::asset('assests/plugins/daterangepicker/daterangepicker.css') }}">
+  <style>
+  .col {
+    width: 50%;
+    float: left;
+  }
+  </style>
 @endsection
 
 @section('content')
@@ -42,23 +49,61 @@
               <h3 class="card-title">Add Equipment Details</h3>
             </div>
             <div class="card-body">
-                <form action="{{ route('equipment.store',['id'=>$id]); }}" method="POST" enctype="multipart/form-data">
-                    @csrf
+                <form action="{{ route('equipment.store',['id'=>$id]) }}" method="POST" enctype="multipart/form-data">
+                  @csrf
                 <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                          <label for="inputName">Name <span class="text-danger">*</span></label>
-                          <input type="text" id="inputName" class="form-control" name="name" required>
-                      </div>
-                    </div>    
-                    <div class="col-md-6">
-                      <div class="form-group">
-                          <label for="inputStatus">Status <span class="text-danger">*</span></label>
-                          <select id="inputStatus" class="form-control custom-select" name="status">
+                    <div class="col-md-12 dynamicDiv">
+                      <div class="form-group col">
+                          <label for="inputTitle">Title <span class="text-danger">*</span></label>
+                          <input type="text" id="inputTitle" class="form-control" name="title" required>
+                        </div>
+                      @if($cfs)
+                        @foreach($cfs as $cf)
+                        
+                        <div class="form-group col">
+                          <label for="inputName">{{ucwords($cf->name) ?? ''}}  @if($cf->input_required != "") <span class="text-danger">*</span> @endif</label>
+                          @if($cf->input_field_type == 'Select')
+                          
+                          <select id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control custom-select" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" @if($cf->input_required != "") required @endif>
+                            <option selected disabled>Select one</option>
+                            @foreach(App\Models\Taxonomy::getTaxonomyData($cf->id) as $val)
+                            <option value="{{$val->name ?? ''}}">{{ucwords($val->name) ?? ''}}</option>
+                            @endforeach
+                          </select>
+
+                          @elseif($cf->input_field_type == 'Textarea')
+                          
+                          <textarea id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control" rows="3" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" placeholder="Enter ..." @if($cf->input_required != "") required @endif></textarea>
+                     
+                          @elseif($cf->input_field_type == 'Date')
+                          
+                          <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                            <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control datetimepicker-input" data-target="#reservationdate" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" @if($cf->input_required != "") required @endif/>
+                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                          </div>
+                          
+                          @elseif($cf->input_field_type == 'Text' || $cf->input_field_type == 'Number')
+                          
+                          <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control {{strtolower($cf->input_field_type).'css'}}" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" @if($cf->input_required != "") required @endif>
+                          
+                          @else
+                          
+                          <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" @if($cf->input_required != "") required @endif>
+                          
+                          @endif
+                        </div>
+                        @endforeach
+                      @endif
+                      
+                      <div class="form-group col">
+                        <label for="inputStatus">Status <span class="text-danger">*</span></label>
+                        <select id="inputStatus" class="form-control custom-select" name="status">
                           <option selected disabled>Select one</option>
                           <option value="1">Active</option>
                           <option value="2">Deactive</option>
-                      </select>
+                        </select>
                       </div>
                     </div>
                 </div> 
@@ -69,7 +114,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 mb-5">
           <a href="#" class="btn btn-secondary">Cancel</a>
           <input type="submit" value="Create new equipments" class="btn btn-success float-right">
         </div>
@@ -81,21 +126,15 @@
 @endsection
 
 @section('footerscript')
+<!-- date-range-picker -->
+<script src="{{ URL::asset('assests/plugins/daterangepicker/daterangepicker.js') }}"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
-        $('[name="all_permission"]').on('click', function() {
-
-            if($(this).is(':checked')) {
-                $.each($('.permission'), function() {
-                    $(this).prop('checked',true);
-                });
-            } else {
-                $.each($('.permission'), function() {
-                    $(this).prop('checked',false);
-                });
-            }
-            
-        });
+          //Date picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
     });
 </script>
 @endsection

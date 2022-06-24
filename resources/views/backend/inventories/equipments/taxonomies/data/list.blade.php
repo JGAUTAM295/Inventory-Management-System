@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('pagetitle', 'Inventory List')
+@section('pagetitle', 'Taxonomy Data List')
 
 @section('head')
  <!-- DataTables -->
@@ -15,12 +15,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>Inventory <a href="{{ route('inventory.create') }}"><button class="btn btn-primary">Add Inventory</button></a></h3>
+            <h3>{{ ucwords($taxonomy->name) ?? ''}} Taxonomy <a href="{{ route('taxonomyData.create', $taxonomy->id) }}"><button class="btn btn-primary">Add Taxonomy Data</button></a> <a href="{{ route('taxonomy.index') }}"><button class="btn btn-success">Back</button></a></h3>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-              <li class="breadcrumb-item active">Inventory</li>
+              <li class="breadcrumb-item active">Taxonomy Data</li>
             </ol>
           </div>
         </div>
@@ -46,20 +46,17 @@
                   </tr>
                   </thead>
                   <tbody>
-                    @if($inventories)
-                    @foreach($inventories as $key => $inventory)
+                    @if($taxonomiesdata)
+                    @foreach($taxonomiesdata as $key => $taxonomydata)
                   <tr>
-                    <td>{{ ++$i }}</td>
-                    <td>{{ucwords($inventory->name) ?? ''}}</td>
-                    <td class="project-state"> @if($inventory->status == '1') <span class="badge badge-success">Active</span>@elseif($inventory->status == '2') <span class="badge badge-danger">Deactive</span>@endif</td>
+                    <td>{{ $key+1 }}</td>
+                    <td>{{ucwords($taxonomydata->name) ?? ''}}</td>
+                    <td class="project-state"> @if($taxonomydata->status == '1') <span class="badge badge-success">Active</span>@elseif($taxonomydata->status == '2') <span class="badge badge-danger">Deactive</span>@endif</td>
                     <td class="project-actions">
-                      <a class="btn btn-primary btn-sm" href="{{ route('inventory.show', $inventory->id) }}">
-                        {!! App\Models\Inventory::checkEquipExits($inventory->id) ?? '<i class="fas fa-plus"></i> Add Data' !!}
-                      </a>
-                      <a class="btn btn-info btn-sm" href="{{ route('inventory.edit', $inventory->id) }}">
+                      <a class="btn btn-info btn-sm" href="{{ route('taxonomyData.edit', ['id'=>$taxonomy->id,'tdid'=>$taxonomydata->id]) }}">
                           <i class="fas fa-pencil-alt"></i>  Edit
                       </a>
-                      <form method="POST" action="{{ route('inventory.destroy', $inventory->id) }}" style="display: inline-block;">
+                      <form method="POST" action="{{ route('taxonomyData.destroy', ['id'=>$taxonomy->id,'tdid'=>$taxonomydata->id]) }}" style="display: inline-block;">
                         @csrf
                         <input name="_method" type="hidden" value="DELETE">
                         <button type="submit" class="btn btn-danger btn-sm show_confirm"><i class="fas fa-trash"></i>Delete</button>
@@ -113,7 +110,7 @@
           var name = $(this).data("name");
           event.preventDefault();
           swal({
-              title: `Are you sure you want to delete this inventory?`,
+              title: `Are you sure you want to delete this taxonomy data?`,
               text: "If you delete this, it will be gone forever.",
               icon: "warning",
               buttons: true,

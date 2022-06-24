@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 23, 2022 at 03:09 PM
+-- Generation Time: Jun 24, 2022 at 02:58 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.28
 
@@ -31,33 +31,21 @@ CREATE TABLE `equipment` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `inventory_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `asset` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `asset_tag` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `site` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `aaa_location` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `location` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `assets_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `assets_description_maximo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `assets_description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `parent_of_assets_clarification` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `assets_class` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `vendor_supplier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `manufacturer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `year_made` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `serial` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cost` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `installation_date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expected_life_year` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subcontractor` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `equipment_info` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(4) NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `equipment`
+--
+
+INSERT INTO `equipment` (`id`, `user_id`, `inventory_id`, `title`, `equipment_info`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(2, 1, 3, 'CEILING FAN', '{\"type\":\"CEILING FAN\",\"asset_#\":\"dsdas\",\"asset_tag\":\"asd\",\"site_(aaa)\":\"Land\",\"aaa_(maximo)_location\":\"asd\",\"location\":\"U1-01\",\"assets_type\":\"FUTUR\",\"asset_description_(maximo)\":\"asdas\",\"asset_description\":\"asdsa\",\"parent_of_assets_clarification\":\"sdas\",\"asset_class_(maximo)\":\"asdas\",\"vendor\\/supplier\":\"CHS\",\"manufacturer\":\"CARRIER\",\"year_made\":\"sadas\",\"model_#\":\"asd\",\"serial_#\":\"asd\",\"installation_date\":\"06\\/24\\/2022\",\"expected_life_(years)\":\"asdas\",\"subcontracto\":\"CHS\"}', 1, 1, 1, '2022-06-24 05:49:16', '2022-06-24 06:38:11');
 
 -- --------------------------------------------------------
 
@@ -127,7 +115,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2022_06_23_073216_create_users_roles_table', 1),
 (9, '2022_06_23_082042_create_permission_tables', 2),
 (12, '2022_06_23_112901_create_inventories_table', 3),
-(14, '2022_06_23_122047_create_equipment_table', 4);
+(15, '2022_06_24_042203_create_taxonomies_table', 5),
+(17, '2022_06_24_050617_create_taxonomy_data_table', 7),
+(19, '2022_06_23_122047_create_equipment_table', 8);
 
 -- --------------------------------------------------------
 
@@ -236,7 +226,22 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (50, 'equipment.show', 'web', '2022-06-23 07:19:28', '2022-06-23 07:19:28'),
 (51, 'equipment.edit', 'web', '2022-06-23 07:19:28', '2022-06-23 07:19:28'),
 (52, 'equipment.update', 'web', '2022-06-23 07:19:28', '2022-06-23 07:19:28'),
-(53, 'equipment.destroy', 'web', '2022-06-23 07:19:28', '2022-06-23 07:19:28');
+(53, 'equipment.destroy', 'web', '2022-06-23 07:19:28', '2022-06-23 07:19:28'),
+(54, 'taxonomy.index', 'web', '2022-06-23 23:09:17', '2022-06-23 23:09:17'),
+(55, 'taxonomy.create', 'web', '2022-06-23 23:09:17', '2022-06-23 23:09:17'),
+(56, 'taxonomy.store', 'web', '2022-06-23 23:09:17', '2022-06-23 23:09:17'),
+(57, 'taxonomy.show', 'web', '2022-06-23 23:09:17', '2022-06-23 23:09:17'),
+(58, 'taxonomy.edit', 'web', '2022-06-23 23:09:17', '2022-06-23 23:09:17'),
+(59, 'taxonomy.update', 'web', '2022-06-23 23:09:17', '2022-06-23 23:09:17'),
+(60, 'taxonomy.destroy', 'web', '2022-06-23 23:09:17', '2022-06-23 23:09:17'),
+(61, 'taxonomyData.index', 'web', '2022-06-23 23:39:46', '2022-06-23 23:39:46'),
+(62, 'taxonomyData.create', 'web', '2022-06-23 23:39:47', '2022-06-23 23:39:47'),
+(63, 'taxonomyData.store', 'web', '2022-06-23 23:39:47', '2022-06-23 23:39:47'),
+(64, 'taxonomyData.show', 'web', '2022-06-23 23:39:47', '2022-06-23 23:39:47'),
+(65, 'taxonomyData.edit', 'web', '2022-06-23 23:39:47', '2022-06-23 23:39:47'),
+(66, 'taxonomyData.update', 'web', '2022-06-23 23:39:47', '2022-06-23 23:39:47'),
+(67, 'taxonomyData.destroy', 'web', '2022-06-23 23:39:47', '2022-06-23 23:39:47'),
+(68, 'equipment.downloadPDF', 'web', '2022-06-24 06:27:19', '2022-06-24 06:27:19');
 
 -- --------------------------------------------------------
 
@@ -358,7 +363,141 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (50, 2),
 (51, 2),
 (52, 2),
-(53, 2);
+(53, 2),
+(54, 2),
+(55, 2),
+(56, 2),
+(57, 2),
+(58, 2),
+(59, 2),
+(60, 2),
+(61, 2),
+(62, 2),
+(63, 2),
+(64, 2),
+(65, 2),
+(66, 2),
+(67, 2),
+(68, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `taxonomies`
+--
+
+CREATE TABLE `taxonomies` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `input_field_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `input_required` tinyint(4) DEFAULT NULL,
+  `order_no` bigint(255) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `taxonomies`
+--
+
+INSERT INTO `taxonomies` (`id`, `name`, `input_field_type`, `input_required`, `order_no`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'Type', 'Select', 1, 1, 1, 1, 1, '2022-06-23 23:20:42', '2022-06-24 04:34:17'),
+(2, 'Site (AAA)', 'Select', 1, 4, 1, 1, 1, '2022-06-23 23:22:47', '2022-06-24 04:35:48'),
+(3, 'Location', 'Select', 1, 6, 1, 1, 1, '2022-06-23 23:23:02', '2022-06-24 04:36:50'),
+(4, 'Assets Type', 'Select', 0, 7, 1, 1, 1, '2022-06-23 23:23:16', '2022-06-24 04:37:03'),
+(5, 'Vendor/Supplier', 'Select', 1, 12, 1, 1, 1, '2022-06-23 23:23:31', '2022-06-24 04:38:17'),
+(6, 'Manufacturer', 'Select', 1, 13, 1, 1, 1, '2022-06-23 23:23:44', '2022-06-24 04:38:27'),
+(7, 'Subcontracto', 'Select', 1, 20, 1, 1, 1, '2022-06-23 23:24:01', '2022-06-24 04:40:17'),
+(9, 'AAA (MAXIMO) LOCATION', 'Text', 0, 5, 1, 1, 1, '2022-06-24 01:28:34', '2022-06-24 04:36:06'),
+(10, 'Asset #', 'Text', 0, 2, 1, 1, 1, '2022-06-24 01:42:55', '2022-06-24 04:34:45'),
+(11, 'Asset Tag', 'Text', 0, 3, 1, 1, 1, '2022-06-24 02:15:04', '2022-06-24 04:35:20'),
+(12, 'Asset description (MAXIMO)', 'Textarea', 0, 8, 1, 1, 1, '2022-06-24 02:16:06', '2022-06-24 04:37:15'),
+(13, 'Asset description', 'Text', 0, 9, 1, 1, 1, '2022-06-24 02:17:17', '2022-06-24 04:37:31'),
+(14, 'Parent of Assets Clarification', 'Text', 0, 10, 1, 1, 1, '2022-06-24 02:17:36', '2022-06-24 04:37:43'),
+(15, 'ASSET CLASS (MAXIMO)', 'Text', 0, 11, 1, 1, 1, '2022-06-24 02:18:18', '2022-06-24 04:37:52'),
+(16, 'Year Made', 'Text', 0, 14, 1, 1, 1, '2022-06-24 02:18:53', '2022-06-24 04:38:35'),
+(17, 'Model #', 'Text', 0, 15, 1, 1, 1, '2022-06-24 02:19:08', '2022-06-24 04:38:46'),
+(18, 'Serial #', 'Text', 1, 16, 1, 1, 1, '2022-06-24 02:19:36', '2022-06-24 04:38:56'),
+(19, 'Cost (Afl.)', 'Text', 0, 17, 1, 1, 1, '2022-06-24 02:19:47', '2022-06-24 04:39:07'),
+(20, 'Installation Date', 'Date', 0, 18, 1, 1, 1, '2022-06-24 02:20:43', '2022-06-24 04:39:31'),
+(21, 'Expected Life (Years)', 'Text', 0, 19, 1, 1, 1, '2022-06-24 02:21:01', '2022-06-24 04:39:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `taxonomy_data`
+--
+
+CREATE TABLE `taxonomy_data` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `taxonomy_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `taxonomy_data`
+--
+
+INSERT INTO `taxonomy_data` (`id`, `taxonomy_id`, `name`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 7, 'CHS', 1, 1, NULL, '2022-06-23 23:54:50', '2022-06-23 23:54:50'),
+(2, 6, 'J&D', 1, 1, NULL, '2022-06-23 23:58:03', '2022-06-23 23:58:03'),
+(3, 6, 'GRUNDFOS', 1, 1, NULL, '2022-06-24 00:00:11', '2022-06-24 00:00:11'),
+(4, 6, 'CARRIER', 1, 1, NULL, '2022-06-24 00:02:14', '2022-06-24 00:02:14'),
+(5, 6, 'FUTURE', 1, 1, NULL, '2022-06-24 00:04:00', '2022-06-24 00:04:00'),
+(6, 6, 'SES', 1, 1, NULL, '2022-06-24 00:04:55', '2022-06-24 00:04:55'),
+(7, 6, 'PROTEC', 1, 1, NULL, '2022-06-24 00:06:24', '2022-06-24 00:06:24'),
+(8, 6, 'ELKAY', 1, 1, NULL, '2022-06-24 00:07:46', '2022-06-24 00:07:46'),
+(9, 6, 'MULTI AQUA', 1, 1, NULL, '2022-06-24 00:08:02', '2022-06-24 00:08:02'),
+(10, 6, 'LIEBERT', 1, 1, NULL, '2022-06-24 00:08:12', '2022-06-24 00:08:12'),
+(11, 6, 'REFLEX', 1, 1, NULL, '2022-06-24 00:08:24', '2022-06-24 00:08:24'),
+(12, 6, 'DAALDEROP', 1, 1, NULL, '2022-06-24 00:08:33', '2022-06-24 00:08:33'),
+(13, 6, 'BERSON', 1, 1, NULL, '2022-06-24 00:08:43', '2022-06-24 00:08:43'),
+(14, 6, 'ABB', 1, 1, NULL, '2022-06-24 00:08:52', '2022-06-24 00:08:52'),
+(15, 5, 'CHS', 1, 1, NULL, '2022-06-24 00:49:16', '2022-06-24 00:49:16'),
+(16, 4, 'FUTUR', 1, 1, NULL, '2022-06-24 00:51:13', '2022-06-24 00:51:13'),
+(18, 3, 'U1-01', 1, 1, NULL, '2022-06-24 00:53:44', '2022-06-24 00:53:44'),
+(19, 3, 'U1-11', 1, 1, NULL, '2022-06-24 00:53:56', '2022-06-24 00:53:56'),
+(20, 3, 'U1-24', 1, 1, NULL, '2022-06-24 00:54:14', '2022-06-24 00:54:14'),
+(21, 3, 'GH-02', 1, 1, NULL, '2022-06-24 00:54:23', '2022-06-24 00:54:23'),
+(22, 3, 'D1-07', 1, 1, NULL, '2022-06-24 00:54:33', '2022-06-24 00:54:33'),
+(23, 3, 'G.House', 1, 1, NULL, '2022-06-24 00:54:42', '2022-06-24 00:54:42'),
+(24, 3, 'U1-07', 1, 1, NULL, '2022-06-24 00:54:55', '2022-06-24 00:54:55'),
+(25, 3, 'U1-08', 1, 1, NULL, '2022-06-24 00:55:04', '2022-06-24 00:55:04'),
+(26, 3, 'U1-12', 1, 1, NULL, '2022-06-24 00:55:27', '2022-06-24 00:55:27'),
+(27, 3, 'U1-19', 1, 1, NULL, '2022-06-24 00:55:37', '2022-06-24 00:55:37'),
+(28, 3, 'U1-20', 1, 1, NULL, '2022-06-24 00:55:46', '2022-06-24 00:55:46'),
+(29, 3, 'U1-21', 1, 1, NULL, '2022-06-24 00:55:55', '2022-06-24 00:55:55'),
+(30, 3, 'U1-23', 1, 1, NULL, '2022-06-24 00:56:07', '2022-06-24 00:56:07'),
+(31, 3, 'U1-18', 1, 1, NULL, '2022-06-24 00:59:03', '2022-06-24 00:59:03'),
+(32, 2, 'Land', 1, 1, NULL, '2022-06-24 01:00:47', '2022-06-24 01:00:47'),
+(33, 2, 'Air Side', 1, 1, NULL, '2022-06-24 01:00:56', '2022-06-24 01:00:56'),
+(34, 2, 'Land Side', 1, 1, NULL, '2022-06-24 01:01:07', '2022-06-24 01:01:07'),
+(35, 2, 'G1-01', 1, 1, NULL, '2022-06-24 01:01:19', '2022-06-24 01:01:19'),
+(36, 1, 'CEILING FAN', 1, 1, NULL, '2022-06-24 01:02:00', '2022-06-24 01:02:00'),
+(37, 1, 'CHILLED WATER PUMP', 1, 1, NULL, '2022-06-24 01:02:10', '2022-06-24 01:02:10'),
+(38, 1, 'CHILLER', 1, 1, NULL, '2022-06-24 01:02:21', '2022-06-24 01:02:21'),
+(39, 1, 'CHILLER CONTROL PANEL', 1, 1, NULL, '2022-06-24 01:02:32', '2022-06-24 01:02:32'),
+(40, 1, 'CONDENSER WATER', 1, 1, NULL, '2022-06-24 01:02:42', '2022-06-24 01:02:42'),
+(41, 1, 'COOLING TOWER', 1, 1, NULL, '2022-06-24 01:02:53', '2022-06-24 01:02:53'),
+(42, 1, 'DOMESTIC WATER PUMP', 1, 1, NULL, '2022-06-24 01:03:05', '2022-06-24 01:03:05'),
+(43, 1, 'DOMESTIC WATER PUMP CONTROLLER', 1, 1, NULL, '2022-06-24 01:03:20', '2022-06-24 01:03:20'),
+(44, 1, 'DRINKING FOUNTAIN', 1, 1, NULL, '2022-06-24 01:03:32', '2022-06-24 01:03:32'),
+(45, 1, 'EXHAUST FAN', 1, 1, NULL, '2022-06-24 01:03:45', '2022-06-24 01:03:45'),
+(46, 1, 'AIR HANDLER UNIT', 1, 1, NULL, '2022-06-24 01:03:54', '2022-06-24 01:03:54'),
+(47, 1, 'AIR HANDLER UNIT (outdoor)', 1, 1, NULL, '2022-06-24 01:04:05', '2022-06-24 01:04:05'),
+(48, 1, 'FAN COIL UNIT', 1, 1, NULL, '2022-06-24 01:04:23', '2022-06-24 01:04:23'),
+(49, 1, 'NOT AN ASSET IN MAXIMO', 1, 1, NULL, '2022-06-24 01:04:34', '2022-06-24 01:04:34'),
+(50, 1, 'UV-FILTER - EXSITING', 1, 1, NULL, '2022-06-24 01:04:45', '2022-06-24 01:04:45'),
+(51, 1, 'UV-FILTER - NEW', 1, 1, NULL, '2022-06-24 01:04:54', '2022-06-24 01:04:54'),
+(52, 1, 'VAR. FREQ. DRIVE', 1, 1, 1, '2022-06-24 01:05:09', '2022-06-24 01:16:50');
 
 -- --------------------------------------------------------
 
@@ -471,6 +610,19 @@ ALTER TABLE `role_has_permissions`
   ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
 
 --
+-- Indexes for table `taxonomies`
+--
+ALTER TABLE `taxonomies`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `taxonomy_data`
+--
+ALTER TABLE `taxonomy_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `taxonomy_data_taxonomy_id_foreign` (`taxonomy_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -485,7 +637,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `equipment`
 --
 ALTER TABLE `equipment`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -503,13 +655,13 @@ ALTER TABLE `inventories`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -522,6 +674,18 @@ ALTER TABLE `personal_access_tokens`
 --
 ALTER TABLE `roles`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `taxonomies`
+--
+ALTER TABLE `taxonomies`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `taxonomy_data`
+--
+ALTER TABLE `taxonomy_data`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -564,6 +728,12 @@ ALTER TABLE `model_has_roles`
 ALTER TABLE `role_has_permissions`
   ADD CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `taxonomy_data`
+--
+ALTER TABLE `taxonomy_data`
+  ADD CONSTRAINT `taxonomy_data_taxonomy_id_foreign` FOREIGN KEY (`taxonomy_id`) REFERENCES `taxonomies` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

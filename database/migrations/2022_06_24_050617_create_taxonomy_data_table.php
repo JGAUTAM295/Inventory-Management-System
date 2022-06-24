@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEquipmentTable extends Migration
+class CreateTaxonomyDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,27 +13,19 @@ class CreateEquipmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('equipment', function (Blueprint $table) {
+        Schema::create('taxonomy_data', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('inventory_id');
-            $table->string('title');
-            $table->longText('equipment_info');
+            $table->unsignedBigInteger('taxonomy_id');
+            $table->string('name');
             $table->tinyInteger('status')->length(4);
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')
+            $table->foreign('taxonomy_id')
                 ->references('id')
-                ->on('users')
+                ->on('taxonomies')
                 ->onDelete('cascade');
-            
-            $table->foreign('inventory_id')
-                ->references('id')
-                ->on('inventories')
-                ->onDelete('cascade');
-       
         });
     }
 
@@ -44,6 +36,6 @@ class CreateEquipmentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('equipment');
+        Schema::dropIfExists('taxonomy_data');
     }
 }

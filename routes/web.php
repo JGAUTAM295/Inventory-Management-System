@@ -108,9 +108,21 @@ Route::get('logout', [
             Route::get('/inventory/{id}/equipment/create', 'Backend\EquipmentController@create')->name('equipment.create');
             Route::post('/inventory/{id}/equipment/create', 'Backend\EquipmentController@store')->name('equipment.store');
             Route::get('/inventory/{id}/equipment/show/{eid}', 'Backend\EquipmentController@show')->name('equipment.show');
+            Route::get('/inventory/{id}/equipment/downloadPDF/{eid}','Backend\EquipmentController@downloadPDF')->name('equipment.downloadPDF');
             Route::get('/inventory/{id}/equipment/edit/{eid}', 'Backend\EquipmentController@edit')->name('equipment.edit');
             Route::patch('/inventory/{id}/equipment/update/{eid}', 'Backend\EquipmentController@update')->name('equipment.update');
             Route::delete('/inventory/{id}/equipment/delete/{eid}', 'Backend\EquipmentController@destroy')->name('equipment.destroy');
+
+            Route::resource('taxonomy', Backend\TaxonomyController::class);
+            Route::resource('taxonomyData', Backend\TaxonomyDataController::class);
+
+            Route::get('/taxonomy/{id}/data', 'Backend\TaxonomyDataController@index')->name('taxonomyData.index');
+            Route::get('/taxonomy/{id}/data/create', 'Backend\TaxonomyDataController@create')->name('taxonomyData.create');
+            Route::post('/taxonomy/{id}/data/create', 'Backend\TaxonomyDataController@store')->name('taxonomyData.store');
+            Route::get('/taxonomy/{id}/data/show/{tdid}', 'Backend\TaxonomyDataController@show')->name('taxonomyData.show');
+            Route::get('/taxonomy/{id}/data/edit/{tdid}', 'Backend\TaxonomyDataController@edit')->name('taxonomyData.edit');
+            Route::patch('/taxonomy/{id}/data/update/{tdid}', 'Backend\TaxonomyDataController@update')->name('taxonomyData.update');
+            Route::delete('/taxonomy/{id}/data/delete/{tdid}', 'Backend\TaxonomyDataController@destroy')->name('taxonomyData.destroy');
 
             // Route::get('/', 'PostsController@index')->name('posts.index');
             // Route::get('/create', 'PostsController@create')->name('posts.create');

@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 
-
 class InventoryController extends Controller
 {
     /**
@@ -85,7 +84,7 @@ class InventoryController extends Controller
     public function show($id)
     {
         $inventory = Inventory::find($id);
-        $equipments = Equipment::where('inventory_id', $id)->orderBy('id','DESC')->paginate(15);
+        $equipments = Equipment::where('inventory_id', $id)->orderBy('id','DESC')->get();
         return view('backend.inventories.equipments.list', compact('inventory','equipments'));
     }
 

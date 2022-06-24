@@ -52,6 +52,8 @@
                             <label for="inputName">Name <span class="text-danger">*</span></label>
                             <input type="text" id="inputName" class="form-control" name="name" value="{{ $role->name ?? ''}}" required>
                         </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="inputStatus">Status  <span class="text-danger">*</span></label>
                             <select id="inputStatus" class="form-control custom-select" name="status">
@@ -61,7 +63,7 @@
                         </select>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
 
                     <div class="form-group">
                       <label for="permissions" class="form-label">Assign Permissions <span class="text-danger">*</span></label>
@@ -78,7 +80,7 @@
                                 name="permission[{{ $permission->name }}]"
                                 value="{{ $permission->name }}"
                                 class='permission'
-                                {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }}>
+                                {{ in_array($permission->name, $rolePermissions) ? 'checked' : '' }}>
                             </td>
                             <td>{{ $permission->name }}</td>
                             <td>{{ $permission->guard_name }}</td>
@@ -87,8 +89,7 @@
                       </table>
                     </div>
                   </div>
-                </div> 
-            
+                </div>
             </div>
             <!-- /.card-body -->
           </div>
