@@ -10,6 +10,7 @@ use App\Models\TaxonomyData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Response;
 use Auth;
 use PDF;
 
@@ -71,7 +72,7 @@ class EquipmentController extends Controller
             $newEquipment->user_id = Auth::user()->id;
             $newEquipment->inventory_id = $id;
             $newEquipment->title = $request->input('title');
-            $newEquipment->equipment_info = json_encode($request->except('_token', 'status'));
+            $newEquipment->equipment_info = json_encode($request->except('_token', 'title', 'status'));
             $newEquipment->status = $request->status;
             $newEquipment->created_by = Auth::user()->id;
             
@@ -106,17 +107,26 @@ class EquipmentController extends Controller
     {
         $inventory = Inventory::find($id);
         $equipment = Equipment::find($eid);
-        $qrcode = base64_encode(\QrCode::format('svg')->size(200)->errorCorrection('H')->generate('https://techvblogs.com/blog/generate-qr-code-laravel-8'));
+        $qrcode = base64_encode(\QrCode::format('svg')->size(170)->errorCorrection('H')->generate(route('equipment.downloadPDF',['id'=>$inventory->id,'eid'=>$equipment->id])));
 
         view()->share('backend.inventories.equipments.pdf', compact('inventory', 'equipment', 'qrcode'));
 
         $pdf = PDF::loadView('backend.inventories.equipments.pdf', compact('inventory', 'equipment','qrcode'))->setOptions(['defaultFont' => 'sans-serif']);
         $filename = strtolower(str_replace(' ', '_', $equipment->title)).'_'.time().'.pdf';
         //return $pdf->download($filename);
-        return $pdf->stream($filename);
+         return $pdf->stream($filename);
         
-        //return view('backend.inventories.equipments.pdf', compact('inventory', 'equipment'));
+        //return view('backend.inventories.equipments.pdf', compact('inventory', 'equipment','qrcode'));
         
+    }
+
+    //getQRCode
+    public function getQRCode($id, $eid)
+    {
+        $inventory = Inventory::find($id);
+        $equipment = Equipment::find($eid);
+    
+        return view('backend.inventories.equipments.qr_code', compact('inventory', 'equipment'));
     }
 
     /**
@@ -152,7 +162,7 @@ class EquipmentController extends Controller
         $equipment->user_id = Auth::user()->id;
         $equipment->inventory_id = $request->route('id');
         $equipment->title = $request->input('title');
-        $equipment->equipment_info = json_encode($request->except('_method', 'id', '_token', 'status'));
+        $equipment->equipment_info = json_encode($request->except('_method', 'id', 'title', '_token', 'status'));
         $equipment->status = $request->status;
         $equipment->updated_by = Auth::user()->id;
    
@@ -178,5 +188,67 @@ class EquipmentController extends Controller
         if($equipment -> delete()){
             return back()->with('success', 'Equipment Data has been deleted successfully!');
         }
+    }
+
+    //Export CSV
+    public function exportcsv($id)
+    {
+
+        $inventory = Inventory::find($id);
+        $equipments = Equipment::where('inventory_id', $id)->orderBy('id','ASC')->get();
+        $fileName = strtolower(str_replace('_', ' ', $inventory->name)).'_equipments'.'_'.time().'_'.rand().'.csv';
+
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+
+        $cfs = Taxonomy::where('status', '1')->orderBy('order_no','ASC')->get();
+        $columns = [];
+       
+        foreach($cfs as $cf)
+        {
+            $columns[] = strtoupper($cf->name);
+
+        }
+       
+        $callback = function() use($equipments, $columns) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+    
+                foreach ($equipments as  $equipment) {
+                    $equipment_info = json_decode($equipment->equipment_info, true);
+                    foreach ($equipment_info as  $key => $value) {
+                    $equipment_info[$key]  = $value;
+                    }
+                    fputcsv($file, $equipment_info);
+                }
+                
+                fclose($file);
+        };
+       // echo '<pre>'; print_r($equipment_info);  echo '</pre>';
+       return response()->stream($callback, 200, $headers);
+    
+        
+    }
+    //import CSV
+    public function importcsv($id, $eid)
+    {
+        $inventory = Inventory::find($id);
+        $equipment = Equipment::find($eid);
+        $qrcode = base64_encode(\QrCode::format('svg')->size(170)->errorCorrection('H')->generate(route('equipment.downloadPDF',['id'=>$inventory->id,'eid'=>$equipment->id])));
+
+        view()->share('backend.inventories.equipments.pdf', compact('inventory', 'equipment', 'qrcode'));
+
+        $pdf = PDF::loadView('backend.inventories.equipments.pdf', compact('inventory', 'equipment','qrcode'))->setOptions(['defaultFont' => 'sans-serif']);
+        $filename = strtolower(str_replace(' ', '_', $equipment->title)).'_'.time().'.pdf';
+        //return $pdf->download($filename);
+         return $pdf->stream($filename);
+        
+        //return view('backend.inventories.equipments.pdf', compact('inventory', 'equipment','qrcode'));
+        
     }
 }

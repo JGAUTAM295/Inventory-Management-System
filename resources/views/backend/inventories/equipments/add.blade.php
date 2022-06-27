@@ -84,7 +84,11 @@
                             </div>
                           </div>
                           
-                          @elseif($cf->input_field_type == 'Text' || $cf->input_field_type == 'Number')
+                          @elseif($cf->input_field_type == 'Number')
+                          
+                          <input type="number" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control {{strtolower($cf->input_field_type).'css'}}" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" @if($cf->input_required != "") required @endif>
+                          
+                          @elseif($cf->input_field_type == 'Text')
                           
                           <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control {{strtolower($cf->input_field_type).'css'}}" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" @if($cf->input_required != "") required @endif>
                           

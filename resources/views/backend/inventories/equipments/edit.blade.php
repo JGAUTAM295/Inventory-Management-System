@@ -57,15 +57,17 @@
 
 
                 <div class="col-md-12 dynamicDiv">
-                      @if($cfs)
-                        @foreach($cfs as $cf)
-                        @foreach(json_decode($equipment->equipment_info, true) as $key => $value)
-                        @if ($key == strtolower(str_replace(' ', '_', $cf->name))) 
                         <div class="form-group col">
                           <label for="inputTitle">Title <span class="text-danger">*</span></label>
                           <input type="text" id="inputTitle" class="form-control" name="title" value="{{$equipment->title ?? ''}}" required>
                         </div>
-                      
+                      <!-- cost_(afl_) -->
+                      @if($cfs)
+                        @foreach($cfs as $cf)
+                        @foreach(json_decode($equipment->equipment_info, true) as $key => $value)
+                        
+                        @if ($key === strtolower(str_replace(' ', '_', $cf->name))) 
+                       
                         <div class="form-group col">
                           <label for="inputName">{{ucwords($cf->name) ?? ''}}  @if($cf->input_required != "") <span class="text-danger">*</span> @endif</label>
                           @if($cf->input_field_type == 'Select')
@@ -89,8 +91,13 @@
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                           </div>
+
+                          @elseif($cf->input_field_type == 'Number')
                           
-                          @elseif($cf->input_field_type == 'Text' || $cf->input_field_type == 'Number')
+                          <input type="number" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control {{strtolower($cf->input_field_type).'css'}}" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" value="{{$value ?? ''}}" @if($cf->input_required != "") required @endif>
+                          
+                          
+                          @elseif($cf->input_field_type == 'Text')
                           
                           <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control {{strtolower($cf->input_field_type).'css'}}" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" value="{{$value ?? ''}}" @if($cf->input_required != "") required @endif>
                           

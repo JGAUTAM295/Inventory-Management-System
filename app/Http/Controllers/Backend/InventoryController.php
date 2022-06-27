@@ -29,8 +29,8 @@ class InventoryController extends Controller
      */
     public function index(Request $request)
     {
-        $inventories = Inventory::orderBy('id','DESC')->paginate(15);
-        return view('backend.inventories.list', compact('inventories'))->with('i', ($request->input('page', 1) - 1) * 15);
+        $inventories = Inventory::orderBy('id','DESC')->get();
+        return view('backend.inventories.list', compact('inventories'));
     }
 
     /**

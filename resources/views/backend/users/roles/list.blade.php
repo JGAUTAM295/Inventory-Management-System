@@ -44,7 +44,6 @@
                   <tr>
                     <th>No</th>
                     <th>Name</th>
-                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -54,7 +53,6 @@
                   <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ucwords($role->name) ?? ''}}</td>
-                    <td class="project-state"> @if($role->status == '1') <span class="badge badge-success">Active</span>@elseif($role->status == '2') <span class="badge badge-danger">Deactive</span>@endif</td>
                     <td class="project-actions">
                       <a class="btn btn-primary btn-sm" href="{{ route('roles.show', $role->id) }}">
                           <i class="fas fa-eye">

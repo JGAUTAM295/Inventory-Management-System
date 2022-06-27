@@ -53,7 +53,7 @@
 
                         <div class="form-group">
                             <label for="inputProjectLeader">User Role <span class="text-danger">*</span></label>
-                            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+                            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control')) !!}
                         </div>
 
                     </div>

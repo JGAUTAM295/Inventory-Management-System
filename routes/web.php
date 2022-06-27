@@ -112,9 +112,13 @@ Route::get('logout', [
             Route::get('/inventory/{id}/equipment/edit/{eid}', 'Backend\EquipmentController@edit')->name('equipment.edit');
             Route::patch('/inventory/{id}/equipment/update/{eid}', 'Backend\EquipmentController@update')->name('equipment.update');
             Route::delete('/inventory/{id}/equipment/delete/{eid}', 'Backend\EquipmentController@destroy')->name('equipment.destroy');
+            Route::get('/inventory/{id}/equipment/qr_code/{eid}', 'Backend\EquipmentController@getQRCode')->name('equipment.getQRCode');
+            Route::get('/inventory/{id}/equipment/export', 'Backend\EquipmentController@exportcsv')->name('equipment.export');
+            Route::get('/inventory/{id}/equipment/import', 'Backend\EquipmentController@importcsv')->name('equipment.import');
 
             Route::resource('taxonomy', Backend\TaxonomyController::class);
             Route::resource('taxonomyData', Backend\TaxonomyDataController::class);
+            Route::resource('work_order', Backend\WorkOrderController::class);
 
             Route::get('/taxonomy/{id}/data', 'Backend\TaxonomyDataController@index')->name('taxonomyData.index');
             Route::get('/taxonomy/{id}/data/create', 'Backend\TaxonomyDataController@create')->name('taxonomyData.create');

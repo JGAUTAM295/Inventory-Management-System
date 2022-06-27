@@ -104,6 +104,29 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-tasks"></i>
+              <p>
+              Work Order
+              <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('work_order.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Work Order</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('work_order.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Work Order</p>
+                </a>
+              </li>
+            </ul>
+          </li>
           @endauth
           @auth
           <li class="nav-item">

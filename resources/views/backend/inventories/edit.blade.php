@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>Inventory Detail <a href="{{ route('roles.index') }}"><button class="btn btn-primary">Back</button></a></h3>
+            <h3>Inventory Detail <a href="{{ route('inventory.index') }}"><button class="btn btn-primary">Back</button></a></h3>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">

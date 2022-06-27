@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('pagetitle', 'Inventory List')
+@section('pagetitle', 'Work Orders List')
 
 @section('head')
  <!-- DataTables -->
@@ -15,12 +15,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>Inventory <a href="{{ route('inventory.create') }}"><button class="btn btn-primary">Add Inventory</button></a></h3>
+            <h3>Work Orders <a href="{{ route('work_order.create') }}"><button class="btn btn-primary">Add Work Order</button></a></h3>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-              <li class="breadcrumb-item active">Inventory</li>
+              <li class="breadcrumb-item active">Work Orders</li>
             </ol>
           </div>
         </div>
@@ -40,26 +40,30 @@
                   <thead>
                   <tr>
                     <th>No</th>
-                    <th>Name</th>
+                    <th>Title</th>
+                    <th>Staff Name</th>
+                    <th>Order Date</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                    @if($inventories)
-                    @foreach($inventories as $key => $inventory)
+                    @if($work_orders)
+                    @foreach($work_orders as $key => $work_order)
                   <tr>
                     <td>{{ $key+1 }}</td>
-                    <td>{{ucwords($inventory->name) ?? ''}}</td>
-                    <td class="project-state"> @if($inventory->status == '1') <span class="badge badge-success">Active</span>@elseif($inventory->status == '2') <span class="badge badge-danger">Deactive</span>@endif</td>
+                    <td>{{ucwords($work_order->title) ?? ''}}</td>
+                    <td> @php $tmp = App\Models\User::find($work_order->staff_id) @endphp {{ucwords($tmp->name) ?? ''}}</td>
+                    <td>{{date('d M, Y h:i A', strtotime($work_order->orderdate)) ?? ''}}</td>
+                    <td class="project-state"> @if($work_order->status == '1') <span class="badge badge-success">Active</span>@elseif($work_order->status == '2') <span class="badge badge-danger">Deactive</span>@endif</td>
                     <td class="project-actions">
-                      <a class="btn btn-primary btn-sm" href="{{ route('inventory.show', $inventory->id) }}">
-                        {!! App\Models\Inventory::checkEquipExits($inventory->id) ?? '<i class="fas fa-plus"></i> Add Data' !!}
-                      </a>
-                      <a class="btn btn-info btn-sm" href="{{ route('inventory.edit', $inventory->id) }}">
+                      <!-- <a class="btn btn-primary btn-sm" href="{{ route('work_order.show', $work_order->id) }}">
+                      
+                      </a> -->
+                      <a class="btn btn-info btn-sm" href="{{ route('work_order.edit', $work_order->id) }}">
                           <i class="fas fa-pencil-alt"></i>  Edit
                       </a>
-                      <form method="POST" action="{{ route('inventory.destroy', $inventory->id) }}" style="display: inline-block;">
+                      <form method="POST" action="{{ route('work_order.destroy', $work_order->id) }}" style="display: inline-block;">
                         @csrf
                         <input name="_method" type="hidden" value="DELETE">
                         <button type="submit" class="btn btn-danger btn-sm show_confirm"><i class="fas fa-trash"></i>Delete</button>
@@ -113,7 +117,7 @@
           var name = $(this).data("name");
           event.preventDefault();
           swal({
-              title: `Are you sure you want to delete this inventory?`,
+              title: `Are you sure you want to delete this work order?`,
               text: "If you delete this, it will be gone forever.",
               icon: "warning",
               buttons: true,

@@ -15,8 +15,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>Equipments <a href="{{ route('equipment.create',['id'=>$inventory->id]); }}"><button class="btn btn-primary">Add Equipment</button></a> 
-            <a href="{{ route('taxonomy.index'); }}"><button class="btn btn-primary">Custom Fields</button></a></h3>
+            <h3>Equipments <a href="{{ route('equipment.create',['id'=>$inventory->id]) }}"><button class="btn btn-primary">Add Equipment</button></a> 
+            <a href="{{ route('taxonomy.index') }}"><button class="btn btn-primary">Custom Fields</button></a>
+            <a href="{{ route('equipment.export', ['id'=>$inventory->id]) }}"><button class="btn btn-primary">Export</button></a>
+            <a href="{{ route('equipment.import', ['id'=>$inventory->id]) }}"><button class="btn btn-primary">Import</button></a>
+            <a href="{{ route('inventory.index') }}"><button class="btn btn-primary">Back</button></a></h3>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -60,8 +63,11 @@
                     </td>
                     <td class="project-state"> @if($equipment->status == '1') <span class="badge badge-success">Active</span>@elseif($equipment->status == '2') <span class="badge badge-danger">Deactive</span>@endif</td>
                     <td class="project-actions">
+                      <a class="btn btn-secondary btn-sm" href="{{route('equipment.getQRCode',['id'=>$inventory->id,'eid'=>$equipment->id])}}" target="_blank">
+                        <i class="fa fa-qrcode" aria-hidden="true"></i> View QR Code
+                      </a>
                       <a class="btn btn-primary btn-sm" href="{{route('equipment.downloadPDF',['id'=>$inventory->id,'eid'=>$equipment->id])}}" target="_blank">
-                        <i class="fas fa-pdf"></i> View PDF
+                        <i class="fas fa-file-pdf"></i> View PDF
                       </a>
                       <a class="btn btn-info btn-sm" href="{{ route('equipment.edit',['id'=>$inventory->id,'eid'=>$equipment->id]) }}">
                           <i class="fas fa-pencil-alt"></i> Edit
@@ -97,6 +103,8 @@
 @endsection
 
 @section('footerscript')
+
+
 <!-- DataTables  & Plugins -->
 <script src="{{ URL::asset('assests/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ URL::asset('assests/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -114,24 +122,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
 <script type="text/javascript">
- 
-     $('.show_confirm').click(function(event) {
-          var form =  $(this).closest("form");
-          var name = $(this).data("name");
-          event.preventDefault();
-          swal({
-              title: `Are you sure you want to delete this equipment?`,
-              text: "If you delete this, it will be gone forever.",
-              icon: "warning",
-              buttons: true,
-              dangerMode: true,
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-              form.submit();
-            }
-          });
+
+  $('.show_confirm').click(function(event) {
+      var form =  $(this).closest("form");
+      var name = $(this).data("name");
+      event.preventDefault();
+      swal({
+          title: `Are you sure you want to delete this equipment?`,
+          text: "If you delete this, it will be gone forever.",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          form.submit();
+        }
       });
+  });
 
   $(function () {
     $("#example1").DataTable({

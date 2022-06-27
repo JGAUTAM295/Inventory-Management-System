@@ -46,8 +46,8 @@
                           @enderror
                       </div>
                     </div>    
-                    <div class="col-md-6 {{ $errors->has('name') ? 'has-error' : ''}}">
-                      <div class="form-group">
+                    <div class="col-md-6">
+                      <div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
                           <label for="inputStatus">Status <span class="text-danger">*</span></label>
                           <select id="inputStatus" class="form-control custom-select" name="status">
                           <option selected disabled>Select one</option>
