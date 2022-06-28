@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2022 at 02:58 PM
+-- Generation Time: Jun 28, 2022 at 03:17 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.28
 
@@ -45,7 +45,8 @@ CREATE TABLE `equipment` (
 --
 
 INSERT INTO `equipment` (`id`, `user_id`, `inventory_id`, `title`, `equipment_info`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(2, 1, 3, 'CEILING FAN', '{\"type\":\"CEILING FAN\",\"asset_#\":\"dsdas\",\"asset_tag\":\"asd\",\"site_(aaa)\":\"Land\",\"aaa_(maximo)_location\":\"asd\",\"location\":\"U1-01\",\"assets_type\":\"FUTUR\",\"asset_description_(maximo)\":\"asdas\",\"asset_description\":\"asdsa\",\"parent_of_assets_clarification\":\"sdas\",\"asset_class_(maximo)\":\"asdas\",\"vendor\\/supplier\":\"CHS\",\"manufacturer\":\"CARRIER\",\"year_made\":\"sadas\",\"model_#\":\"asd\",\"serial_#\":\"asd\",\"installation_date\":\"06\\/24\\/2022\",\"expected_life_(years)\":\"asdas\",\"subcontracto\":\"CHS\"}', 1, 1, 1, '2022-06-24 05:49:16', '2022-06-24 06:38:11');
+(1, 1, 3, 'CHILLER', '{\"title\":\"CHILLER\",\"type\":\"CHILLER\",\"asset_#\":\"vfgdfg\",\"asset_tag\":\"hjghj\",\"site_(aaa)\":\"Air Side\",\"aaa_(maximo)_location\":\"jghjghj\",\"location\":\"U1-20\",\"assets_type\":\"FUTUR\",\"asset_description_(maximo)\":\"jghjghj\",\"asset_description\":\"hgjgh\",\"parent_of_assets_clarification\":\"hgjghj\",\"asset_class_(maximo)\":\"jhg\",\"vendor\\/supplier\":\"CHS\",\"manufacturer\":\"MULTI AQUA\",\"year_made\":\"2008\",\"model_#\":\"dfgf\",\"serial_#\":\"dfgdfgdfg\",\"cost_(afl.)\":\"1000\",\"installation_date\":\"06\\/27\\/2022\",\"expected_life_(years)\":\"6\",\"subcontracto\":\"CHS\",\"status\":\"Deactive\"}', 2, 1, NULL, '2022-06-28 02:13:03', '2022-06-28 02:13:03'),
+(2, 1, 3, 'CEILING FAN', '{\"title\":\"CEILING FAN\",\"type\":\"CEILING FAN\",\"asset_#\":\"ffgdfg\",\"asset_tag\":\"fgdfg\",\"site_(aaa)\":\"Land Side\",\"aaa_(maximo)_location\":\"fdfdf\",\"location\":\"U1-07\",\"assets_type\":\"JK\",\"asset_description_(maximo)\":\"fgh\",\"asset_description\":\"iyuiyu\",\"parent_of_assets_clarification\":\"llkk\",\"asset_class_(maximo)\":\"hfgh\",\"vendor\\/supplier\":\"CHS\",\"manufacturer\":\"J&D\",\"year_made\":\"2009\",\"model_#\":\"gdg\",\"serial_#\":\"rtyyuyu\",\"cost_(afl.)\":\"2000\",\"installation_date\":\"06\\/28\\/2022\",\"expected_life_(years)\":\"9\",\"subcontracto\":\"CHS\",\"status\":\"Active\"}', 1, 1, NULL, '2022-06-28 02:13:03', '2022-06-28 02:13:03');
 
 -- --------------------------------------------------------
 
@@ -62,6 +63,32 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `file_logs`
+--
+
+CREATE TABLE `file_logs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `filename` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `file_logs`
+--
+
+INSERT INTO `file_logs` (`id`, `filename`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'dmart_equipments_1656334693_892455852.csv', 2, 1, NULL, '2022-06-28 00:44:11', '2022-06-28 00:44:11'),
+(2, 'dmart_equipments_1656398361_342389006.csv', 2, 1, NULL, '2022-06-28 01:09:35', '2022-06-28 01:09:35'),
+(3, 'dmart_equipments_1656398361_342389006.csv', 1, 1, NULL, '2022-06-28 01:12:09', '2022-06-28 01:12:09'),
+(4, 'dmart_equipments_1656398361_342389006.csv', 1, 1, NULL, '2022-06-28 02:13:03', '2022-06-28 02:13:03');
 
 -- --------------------------------------------------------
 
@@ -117,7 +144,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (12, '2022_06_23_112901_create_inventories_table', 3),
 (15, '2022_06_24_042203_create_taxonomies_table', 5),
 (17, '2022_06_24_050617_create_taxonomy_data_table', 7),
-(19, '2022_06_23_122047_create_equipment_table', 8);
+(19, '2022_06_23_122047_create_equipment_table', 8),
+(23, '2022_06_27_064412_create_work_orders_table', 9),
+(24, '2022_06_28_060653_create_file_logs_table', 10);
 
 -- --------------------------------------------------------
 
@@ -149,7 +178,9 @@ CREATE TABLE `model_has_roles` (
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\Models\\User', 2),
-(2, 'App\\Models\\User', 1);
+(2, 'App\\Models\\User', 1),
+(4, 'App\\Models\\User', 3),
+(4, 'App\\Models\\User', 4);
 
 -- --------------------------------------------------------
 
@@ -241,7 +272,21 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (65, 'taxonomyData.edit', 'web', '2022-06-23 23:39:47', '2022-06-23 23:39:47'),
 (66, 'taxonomyData.update', 'web', '2022-06-23 23:39:47', '2022-06-23 23:39:47'),
 (67, 'taxonomyData.destroy', 'web', '2022-06-23 23:39:47', '2022-06-23 23:39:47'),
-(68, 'equipment.downloadPDF', 'web', '2022-06-24 06:27:19', '2022-06-24 06:27:19');
+(68, 'equipment.downloadPDF', 'web', '2022-06-24 06:27:19', '2022-06-24 06:27:19'),
+(69, 'equipment.getQRCode', 'web', '2022-06-26 23:51:01', '2022-06-26 23:51:01'),
+(70, 'work_order.index', 'web', '2022-06-27 01:15:58', '2022-06-27 01:15:58'),
+(71, 'work_order.create', 'web', '2022-06-27 01:15:58', '2022-06-27 01:15:58'),
+(72, 'work_order.store', 'web', '2022-06-27 01:15:58', '2022-06-27 01:15:58'),
+(73, 'work_order.show', 'web', '2022-06-27 01:15:58', '2022-06-27 01:15:58'),
+(74, 'work_order.edit', 'web', '2022-06-27 01:15:58', '2022-06-27 01:15:58'),
+(75, 'work_order.update', 'web', '2022-06-27 01:15:58', '2022-06-27 01:15:58'),
+(76, 'work_order.destroy', 'web', '2022-06-27 01:15:58', '2022-06-27 01:15:58'),
+(77, 'equipment.export', 'web', '2022-06-27 04:15:54', '2022-06-27 04:15:54'),
+(78, 'equipment.import', 'web', '2022-06-27 04:15:54', '2022-06-27 04:15:54'),
+(79, 'work_order.report', 'web', '2022-06-28 04:05:50', '2022-06-28 04:05:50'),
+(80, 'dashboard.clientStaff', 'web', '2022-06-28 06:07:06', '2022-06-28 06:07:06'),
+(81, 'clientUser', 'web', '2022-06-28 06:08:21', '2022-06-28 06:08:21'),
+(82, 'staffsUser', 'web', '2022-06-28 06:08:21', '2022-06-28 06:08:21');
 
 -- --------------------------------------------------------
 
@@ -282,7 +327,8 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'web', '2022-06-23 04:09:09', '2022-06-23 04:09:09'),
 (2, 'Super-Admin', 'web', '2022-06-23 04:43:17', '2022-06-23 04:43:17'),
-(3, 'Client', 'web', '2022-06-23 04:44:05', '2022-06-23 04:44:05');
+(3, 'Client', 'web', '2022-06-23 04:44:05', '2022-06-23 04:44:05'),
+(4, 'Staff', 'web', '2022-06-27 01:50:29', '2022-06-27 01:50:29');
 
 -- --------------------------------------------------------
 
@@ -303,9 +349,11 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (1, 1),
 (1, 2),
 (1, 3),
+(1, 4),
 (2, 1),
 (2, 2),
 (2, 3),
+(2, 4),
 (3, 1),
 (3, 2),
 (3, 3),
@@ -378,7 +426,25 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (65, 2),
 (66, 2),
 (67, 2),
-(68, 2);
+(68, 2),
+(69, 2),
+(70, 2),
+(70, 4),
+(71, 2),
+(72, 2),
+(73, 2),
+(73, 4),
+(74, 2),
+(74, 4),
+(75, 2),
+(75, 4),
+(76, 2),
+(77, 2),
+(78, 2),
+(79, 2),
+(80, 2),
+(81, 2),
+(82, 2);
 
 -- --------------------------------------------------------
 
@@ -421,7 +487,7 @@ INSERT INTO `taxonomies` (`id`, `name`, `input_field_type`, `input_required`, `o
 (16, 'Year Made', 'Text', 0, 14, 1, 1, 1, '2022-06-24 02:18:53', '2022-06-24 04:38:35'),
 (17, 'Model #', 'Text', 0, 15, 1, 1, 1, '2022-06-24 02:19:08', '2022-06-24 04:38:46'),
 (18, 'Serial #', 'Text', 1, 16, 1, 1, 1, '2022-06-24 02:19:36', '2022-06-24 04:38:56'),
-(19, 'Cost (Afl.)', 'Text', 0, 17, 1, 1, 1, '2022-06-24 02:19:47', '2022-06-24 04:39:07'),
+(19, 'Cost (Afl.)', 'Number', 0, 17, 1, 1, 1, '2022-06-24 02:19:47', '2022-06-27 07:11:26'),
 (20, 'Installation Date', 'Date', 0, 18, 1, 1, 1, '2022-06-24 02:20:43', '2022-06-24 04:39:31'),
 (21, 'Expected Life (Years)', 'Text', 0, 19, 1, 1, 1, '2022-06-24 02:21:01', '2022-06-24 04:39:39');
 
@@ -497,7 +563,8 @@ INSERT INTO `taxonomy_data` (`id`, `taxonomy_id`, `name`, `status`, `created_by`
 (49, 1, 'NOT AN ASSET IN MAXIMO', 1, 1, NULL, '2022-06-24 01:04:34', '2022-06-24 01:04:34'),
 (50, 1, 'UV-FILTER - EXSITING', 1, 1, NULL, '2022-06-24 01:04:45', '2022-06-24 01:04:45'),
 (51, 1, 'UV-FILTER - NEW', 1, 1, NULL, '2022-06-24 01:04:54', '2022-06-24 01:04:54'),
-(52, 1, 'VAR. FREQ. DRIVE', 1, 1, 1, '2022-06-24 01:05:09', '2022-06-24 01:16:50');
+(52, 1, 'VAR. FREQ. DRIVE', 1, 1, 1, '2022-06-24 01:05:09', '2022-06-24 01:16:50'),
+(53, 4, 'JK', 1, 1, NULL, '2022-06-28 02:13:03', '2022-06-28 02:13:03');
 
 -- --------------------------------------------------------
 
@@ -526,7 +593,36 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `permissionid`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (1, 'SuperAdmin', 'jyoti.610weblab@gmail.com', NULL, '$2y$10$mjuoGReNxtHNgDsgaoW8zuMK9LbjEQesmcCos45aGn/A6bwfwN5eW', NULL, 1, 1, NULL, 2, '2022-06-23 02:37:41', '2022-06-23 05:00:46'),
-(2, 'Admin', 'admin@gmail.com', NULL, '$2y$10$py6DGlIAEuY1K0RLhaU.k.Fpn9mXWhpkqcs7gCFdwib5CkiojJYvO', NULL, 1, 1, NULL, NULL, '2022-06-23 04:09:09', '2022-06-23 04:09:09');
+(2, 'Admin', 'admin@gmail.com', NULL, '$2y$10$py6DGlIAEuY1K0RLhaU.k.Fpn9mXWhpkqcs7gCFdwib5CkiojJYvO', NULL, 1, 1, NULL, NULL, '2022-06-23 04:09:09', '2022-06-23 04:09:09'),
+(3, 'Nick', 'nick@gmail.com', NULL, '$2y$10$hTb1GpysrTERzj/0lWX9DOALgdQfNfKXzURNxZT7kRLaImhSZXd8S', NULL, NULL, 1, NULL, 1, '2022-06-27 01:49:58', '2022-06-27 01:52:31'),
+(4, 'Ele', 'ele@gmail.com', NULL, '$2y$10$d1CBaFOAqdCjpiW.K4CnpOcOqt.FUnHSejH1tcLCAi8y2fiesgnQi', NULL, NULL, 1, NULL, 1, '2022-06-27 01:53:37', '2022-06-27 01:53:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `work_orders`
+--
+
+CREATE TABLE `work_orders` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `staff_id` bigint(20) UNSIGNED NOT NULL,
+  `orderdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` tinyint(4) NOT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `work_orders`
+--
+
+INSERT INTO `work_orders` (`id`, `user_id`, `title`, `description`, `staff_id`, `orderdate`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 1, 'First Order', 'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero\'s De Finibus Bonorum et Malorum for use in a type specimen book.', 3, '2022-06-27 20:01:10', 4, 1, 1, '2022-06-27 02:29:59', '2022-06-28 02:31:14');
 
 --
 -- Indexes for dumped tables
@@ -546,6 +642,12 @@ ALTER TABLE `equipment`
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `file_logs`
+--
+ALTER TABLE `file_logs`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `inventories`
@@ -630,6 +732,13 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indexes for table `work_orders`
+--
+ALTER TABLE `work_orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `work_orders_user_id_foreign` (`user_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -646,6 +755,12 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `file_logs`
+--
+ALTER TABLE `file_logs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `inventories`
 --
 ALTER TABLE `inventories`
@@ -655,13 +770,13 @@ ALTER TABLE `inventories`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -673,7 +788,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `taxonomies`
@@ -685,13 +800,19 @@ ALTER TABLE `taxonomies`
 -- AUTO_INCREMENT for table `taxonomy_data`
 --
 ALTER TABLE `taxonomy_data`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `work_orders`
+--
+ALTER TABLE `work_orders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -734,6 +855,12 @@ ALTER TABLE `role_has_permissions`
 --
 ALTER TABLE `taxonomy_data`
   ADD CONSTRAINT `taxonomy_data_taxonomy_id_foreign` FOREIGN KEY (`taxonomy_id`) REFERENCES `taxonomies` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `work_orders`
+--
+ALTER TABLE `work_orders`
+  ADD CONSTRAINT `work_orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
