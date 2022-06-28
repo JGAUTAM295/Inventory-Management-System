@@ -65,8 +65,8 @@
                     </div>
                   </div>
                   <div class="col-12">
-                    <a href="#" class="btn btn-secondary">Cancel</a>
-                    <input type="submit" value="Update userrole" class="btn btn-success float-right">
+                    <a href="{{ route('inventory.index') }}" class="btn btn-secondary">Cancel</a>
+                    <input type="submit" value="Update inventory" class="btn btn-success float-right">
                   </div>
                 </div>
               </form>

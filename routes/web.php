@@ -95,6 +95,8 @@ Route::get('logout', [
             Route::post('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('updateUser');
             //Route::get('/{id}', [App\Http\Controllers\UserController::class, 'show'])->name('viewUser');
             Route::delete('/delete-users/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('deleteUser');
+            Route::get('/users/clients', [App\Http\Controllers\UserController::class, 'getclients'])->name('clientUser');
+            Route::get('/users/staffs', [App\Http\Controllers\UserController::class, 'getstaff'])->name('staffsUser');
 
         });
 
@@ -114,12 +116,12 @@ Route::get('logout', [
             Route::delete('/inventory/{id}/equipment/delete/{eid}', 'Backend\EquipmentController@destroy')->name('equipment.destroy');
             Route::get('/inventory/{id}/equipment/qr_code/{eid}', 'Backend\EquipmentController@getQRCode')->name('equipment.getQRCode');
             Route::get('/inventory/{id}/equipment/export', 'Backend\EquipmentController@exportcsv')->name('equipment.export');
-            Route::get('/inventory/{id}/equipment/import', 'Backend\EquipmentController@importcsv')->name('equipment.import');
+            Route::post('/inventory/{id}/equipment/import', 'Backend\EquipmentController@importcsv')->name('equipment.import');
 
             Route::resource('taxonomy', Backend\TaxonomyController::class);
             Route::resource('taxonomyData', Backend\TaxonomyDataController::class);
             Route::resource('work_order', Backend\WorkOrderController::class);
-
+            
             Route::get('/taxonomy/{id}/data', 'Backend\TaxonomyDataController@index')->name('taxonomyData.index');
             Route::get('/taxonomy/{id}/data/create', 'Backend\TaxonomyDataController@create')->name('taxonomyData.create');
             Route::post('/taxonomy/{id}/data/create', 'Backend\TaxonomyDataController@store')->name('taxonomyData.store');
@@ -127,6 +129,8 @@ Route::get('logout', [
             Route::get('/taxonomy/{id}/data/edit/{tdid}', 'Backend\TaxonomyDataController@edit')->name('taxonomyData.edit');
             Route::patch('/taxonomy/{id}/data/update/{tdid}', 'Backend\TaxonomyDataController@update')->name('taxonomyData.update');
             Route::delete('/taxonomy/{id}/data/delete/{tdid}', 'Backend\TaxonomyDataController@destroy')->name('taxonomyData.destroy');
+
+            Route::get('/work_order/report/{id}', 'Backend\ReportController@index')->name('work_order.report');
 
             // Route::get('/', 'PostsController@index')->name('posts.index');
             // Route::get('/create', 'PostsController@create')->name('posts.create');
@@ -136,6 +140,8 @@ Route::get('logout', [
             // Route::patch('/{post}/update', 'PostsController@update')->name('posts.update');
             // Route::delete('/{post}/delete', 'PostsController@destroy')->name('posts.destroy');
         });
+
+        
 
         Route::resource('roles', RolesController::class);
         Route::resource('permissions', PermissionsController::class);
@@ -147,6 +153,7 @@ Route::get('logout', [
     // Route::resource('users', UserController::class);
 
     Route::get('/dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/clientStaff/{year}', [App\Http\Controllers\Backend\DashboardController::class, 'clientStaff'])->name('dashboard.clientStaff');
     
    
     

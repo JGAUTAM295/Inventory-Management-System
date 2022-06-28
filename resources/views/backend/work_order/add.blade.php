@@ -87,8 +87,10 @@
                         <label for="inputStatus">Status <span class="text-danger">*</span></label>
                         <select id="inputStatus" class="form-control custom-select" name="status">
                           <option selected disabled>Select one</option>
-                          <option value="1">Active</option>
-                          <option value="2">Deactive</option>
+                          <option value="1">Cancelled</option>
+                          <option value="2">Pending</option>
+                          <option value="3">Processing</option>
+                          <option value="4">Complete</option>
                         </select>
                       @error('status')
                         <span class="invalid-feedback" role="alert" style="display:block;">
@@ -106,7 +108,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <a href="#" class="btn btn-secondary">Cancel</a>
+          <a href="{{ route('work_order.index') }}" class="btn btn-secondary">Cancel</a>
           <input type="submit" value="Create new work order" class="btn btn-success float-right">
         </div>
       </div>

@@ -47,20 +47,10 @@
                 @csrf
                 <input type="hidden" name="id" value="{{ $role->id ?? '' }}">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="inputName">Name <span class="text-danger">*</span></label>
                             <input type="text" id="inputName" class="form-control" name="name" value="{{ $role->name ?? ''}}" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="inputStatus">Status  <span class="text-danger">*</span></label>
-                            <select id="inputStatus" class="form-control custom-select" name="status">
-                            <option selected disabled>Select one</option>
-                            <option value="1" @if($role->status == '1') selected @endif>Active</option>
-                            <option value="2" @if($role->status == '2') selected @endif>Deactive</option>
-                        </select>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -96,9 +86,9 @@
           <!-- /.card -->
         </div>
       </div>
-      <div class="row">
+      <div class="row mb-5">
         <div class="col-12">
-          <a href="#" class="btn btn-secondary">Cancel</a>
+          <a href="{{ route('roles.index') }}" class="btn btn-secondary">Cancel</a>
           <input type="submit" value="Update userrole" class="btn btn-success float-right">
         </div>
       </div>

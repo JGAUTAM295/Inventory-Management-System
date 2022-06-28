@@ -1,5 +1,9 @@
 @extends('backend.layout.master')
 
+@section('head')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" rel="stylesheet"/>
+@endsection
+
 @section('content')
  <!-- Content Header (Page header) -->
  <div class="content-header">
@@ -94,15 +98,22 @@
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="fas fa-chart-pie mr-1"></i>
-                  Monthy Orders
+                  Sales
                 </h3>
-              
+                <div class="card-tools">
+                  <ul class="nav nav-pills ml-auto">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                    </li>
+                  </ul>
+                </div>
               </div><!-- /.card-header -->
               <div class="card-body">
-                <div class="tab-content p-0">
-                  <!-- Morris chart - Sales -->
-                      <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
-                </div>
+              <!-- <div id="revenue-chart"></div> -->
+              <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
               </div><!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -269,8 +280,35 @@
 
 @section('footerscript')
 <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
 
 <script>
+
+var data = <?php echo $workorderjson; ?>
+
+var months = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+
+var lineGraph = Morris.Area({
+    element: 'revenue-chart',
+    xkey: 'year',
+    ykeys: ['value'],
+    lineColors: ['#75a5c1'],
+    hideHover: 'auto',
+    labels: ['Sales'],
+    data: data,
+    resize: true,
+    xLabelAngle: 90,
+    parseTime: false,
+    xLabelFormat: function (x) {
+        return months[parseInt(x.label.slice(5))];
+    }
+});
+
+$('svg').height(350);
+
    //-------------
     //- PIE CHART -
     //-------------

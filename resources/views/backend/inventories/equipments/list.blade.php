@@ -6,11 +6,17 @@
   <link rel="stylesheet" href="{{ URL::asset('assests/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('assests/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('assests/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+  <style>
+    .form-group input[type="file"] {
+      float: none!important;
+      width: 20%;
+    }
+  </style>
 @endsection
 
 @section('content')
 
-    <!-- Content Header (Page header) -->
+    <!-- Content Header (Page header) {{ route('equipment.import', ['id'=>$inventory->id]) }}-->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -18,7 +24,7 @@
             <h3>Equipments <a href="{{ route('equipment.create',['id'=>$inventory->id]) }}"><button class="btn btn-primary">Add Equipment</button></a> 
             <a href="{{ route('taxonomy.index') }}"><button class="btn btn-primary">Custom Fields</button></a>
             <a href="{{ route('equipment.export', ['id'=>$inventory->id]) }}"><button class="btn btn-primary">Export</button></a>
-            <a href="{{ route('equipment.import', ['id'=>$inventory->id]) }}"><button class="btn btn-primary">Import</button></a>
+            <a href="#" id="import_box"><button class="btn btn-primary">Import</button></a>
             <a href="{{ route('inventory.index') }}"><button class="btn btn-primary">Back</button></a></h3>
           </div>
           <div class="col-sm-6">
@@ -27,6 +33,40 @@
               <li class="breadcrumb-item active">Equipments</li>
             </ol>
           </div>
+
+          <div id="importdiv" class="col-xl-12 col-md-12 col-12 mt-4" style="display:none;">
+            @if(Session::has("success"))
+            <div class="alert alert-success alert-primary alert-dismissible fade show " role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                  <span class="sr-only">Close</span>
+              </button>
+              <strong>Success!</strong> {{Session::get("success")}}
+            </div>
+            @elseif(Session::has("failed"))
+            <div class="alert alert-danger alert-dismissible fade show " role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                  <span class="sr-only">Close</span>
+              </button>
+              {{Session::get("failed")}}
+            </div>
+            @endif
+
+            <form method="post" action="{{route('equipment.import', ['id'=>$inventory->id])}}" enctype="multipart/form-data">
+                @csrf
+                <div class="card shadow text-center">
+                    <div class="card-body">
+                        <div class="form-group" style="display: ruby;">
+                            <label>Select file in csv format: </label>
+                            <input type="file" name="csv_file" class="form-control"  accept=".csv">
+                            <button type="submit" class="btn btn-success" name="submit">Import Equipment Data </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+          </div>
+
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -144,7 +184,7 @@
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print"]
+      // "buttons": ["copy", "csv", "excel", "pdf", "print"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
@@ -155,6 +195,12 @@
       "autoWidth": false,
       "responsive": true,
     });
-  });
+
+    $('#import_box').click(function() {
+        $('#importdiv').toggle();
+        return false;
+    });        
+   });
 </script>
+
 @endsection

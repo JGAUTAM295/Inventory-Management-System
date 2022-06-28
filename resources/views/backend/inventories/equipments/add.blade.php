@@ -119,7 +119,7 @@
       </div>
       <div class="row">
         <div class="col-12 mb-5">
-          <a href="#" class="btn btn-secondary">Cancel</a>
+          <a href="{{ route('inventory.show', $id) }}" class="btn btn-secondary">Cancel</a>
           <input type="submit" value="Create new equipments" class="btn btn-success float-right">
         </div>
       </div>

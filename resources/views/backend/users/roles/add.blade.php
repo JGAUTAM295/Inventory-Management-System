@@ -45,18 +45,10 @@
                 <form action="{{ route('roles.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="inputName">Name  <span class="text-danger">*</span></label>
                             <input type="text" id="inputName" class="form-control" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputStatus">Status  <span class="text-danger">*</span></label>
-                            <select id="inputStatus" class="form-control custom-select" name="status">
-                            <option selected disabled>Select one</option>
-                            <option value="1">Active</option>
-                            <option value="2">Deactive</option>
-                        </select>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -90,7 +82,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <a href="#" class="btn btn-secondary">Cancel</a>
+          <a href="{{ route('roles.index') }}" class="btn btn-secondary">Cancel</a>
           <input type="submit" value="Create new userrole" class="btn btn-success float-right">
         </div>
       </div>

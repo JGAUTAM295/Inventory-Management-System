@@ -153,4 +153,20 @@ class UserController extends Controller
         User::find($id)->delete();
         return redirect()->route('users')->with('success','User deleted successfully');
     }
+
+    public function getclients(Request $request)
+    {
+        $users = User::whereHas('roles', function ($q) {
+            $q->where('name', '=', 'Client');
+        })->orderBy('id','DESC')->get();
+        return view('backend.users.client',compact('users'));
+    }
+
+    public function getstaff(Request $request)
+    {
+        $users = User::whereHas('roles', function ($q) {
+            $q->where('name', '=', 'Staff');
+        })->orderBy('id','DESC')->get();
+        return view('backend.users.staff',compact('users'));
+    }
 }

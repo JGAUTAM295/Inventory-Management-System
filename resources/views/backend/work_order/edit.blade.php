@@ -89,7 +89,7 @@
                       <div class="form-group {{ $errors->has('orderdate') ? 'has-error' : ''}}">
                         <label for="inputOrderdate">Work Order Date <span class="text-danger">*</span></label>
                         <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-                            <input type="text" id="inputOrderdate" class="form-control datetimepicker-input" data-target="#reservationdatetime" name="orderdate" value="{{ date('d/m/Y h:i A', strtotime($work_order->orderdate))  ?? ''}}" required/>
+                            <input type="text" id="inputOrderdate" class="form-control datetimepicker-input" data-target="#reservationdatetime" name="orderdate" value="{{ date('d-m-Y h:i:s', strtotime($work_order->orderdate))  ?? ''}}" required/>
                             <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -100,8 +100,10 @@
                         <label for="inputStatus">Status  <span class="text-danger">*</span></label>
                         <select id="inputStatus" class="form-control custom-select" name="status">
                           <option selected disabled>Select one</option>
-                          <option value="1" @if($work_order->status == '1') selected @endif>Active</option>
-                          <option value="2" @if($work_order->status == '2') selected @endif>Deactive</option>
+                          <option value="1" @if($work_order->status == '1') selected @endif>Cancelled</option>
+                          <option value="2" @if($work_order->status == '2') selected @endif>Pending</option>
+                          <option value="3" @if($work_order->status == '3') selected @endif>Processing</option>
+                          <option value="4" @if($work_order->status == '4') selected @endif>Complete</option>
                         </select>
                         @error('status')
                         <span class="invalid-feedback" role="alert" style="display:block;">
@@ -112,8 +114,8 @@
                     </div>
                   </div>
                   <div class="col-12">
-                    <a href="#" class="btn btn-secondary">Cancel</a>
-                    <input type="submit" value="Update userrole" class="btn btn-success float-right">
+                    <a href="{{ route('work_order.index') }}" class="btn btn-secondary">Cancel</a>
+                    <input type="submit" value="Update work order" class="btn btn-success float-right">
                   </div>
                 </div>
               </form>
@@ -135,8 +137,11 @@
     $(document).ready(function() {
       var orderDate = "{{ date('d/m/Y h:i A', strtotime($work_order->orderdate)) }}";
       //DateTime picker
-      $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' },
-      defaultDate: "{{ date('d/m/Y h:i A', strtotime($work_order->orderdate)) }}"});
+      $('#reservationdatetime').datetimepicker({ 
+       // defaultDate:  "{{ date('d-m-Y h:i:s', strtotime($work_order->orderdate)) }}",
+        format:'DD-MM-YYYY hh:mm:ss',
+        icons: { time: 'far fa-clock' },
+    });
       
        // Date Object
 
