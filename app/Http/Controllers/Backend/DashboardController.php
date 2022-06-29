@@ -80,20 +80,59 @@ class DashboardController extends Controller
 
     $workorderjson = json_encode($data);
 
-    $newworkorder = WorkOrder::selectRaw('DATE_FORMAT(orderdate, "%b") as month, COUNT(*) as total')
-    ->groupBy('month')
-    ->orderByRaw('MONTH(orderdate)')
-    ->getQuery()
-    ->get()
-    ->mapWithKeys(function ($row) {
-        return [$row->month => $row->total];
-    })
-    ->toJson();
 
-        // dd($cancel_orders, $pending_orders, $processing_orders, $complete_orders);
-       // echo '<pre>'; print_r($newworkorder); echo '</pre>';
+    $userss = User::select('id', 'created_at')->get()->groupBy(function ($date) {
+        return Carbon::parse($date->created_at)->format('m');
+    });
+    
+    $usermcount = [];
+    $userArr = [];
+    
+    foreach ($userss as $key => $value) {
+        $usermcount[(int)$key] = count($value);
+    }
+    
+    $month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+    for ($i = 1; $i <= 12; $i++) {
+        if (!empty($usermcount[$i])) {
+            $userArr[$i]['count'] = $usermcount[$i];
+        } else {
+            $userArr[$i]['count'] = 0;
+        }
+        
+        $userArr[$i]['month'] = $month[$i - 1];
+    }
 
-        return view('backend.dashboard', compact('neworders', 'count_staff', 'count_client', 'count_RegisterUsers','count_Inventories', 'workorderjson', 'staffUserForChart','clientUserForChart','cancel_orders','pending_orders','processing_orders','complete_orders'));
+    $user_monthwise = json_encode(array_values($userArr));
+
+    $order_all = WorkOrder::select('id', 'created_at')->where('user_id', Auth::user()->id)->get()->groupBy(function ($date) {
+        return Carbon::parse($date->created_at)->format('m');
+    });
+    
+    $ordermcount = [];
+    $orderArr = [];
+    
+    foreach ($order_all as $key => $value) {
+        $ordermcount[(int)$key] = count($value);
+    }
+    
+    for ($i = 1; $i <= 12; $i++) {
+        if (!empty($ordermcount[$i])) {
+            $orderArr[$i] = $ordermcount[$i];
+        } else {
+            $orderArr[$i] = 0;
+        }
+        
+        //$orderArr[$i]['month'] = $month[$i - 1];
+    }
+
+    $order_monthwise = json_encode(array_values($orderArr));
+      
+    //  echo '<pre>'; print_r($order_monthwise); echo '</pre>';
+    //  die;
+
+        return view('backend.dashboard', compact('neworders', 'count_staff', 'count_client', 'count_RegisterUsers','count_Inventories', 'user_monthwise', 'order_monthwise', 'staffUserForChart','clientUserForChart','cancel_orders','pending_orders','processing_orders','complete_orders'));
     }
 
     public function clientUsers($year)

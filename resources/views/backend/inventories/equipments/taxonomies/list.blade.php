@@ -15,7 +15,9 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>Custom Fields <a href="{{ route('taxonomy.create') }}"><button class="btn btn-primary">Add Custom Field</button></a></h3>
+            <h3>Custom Fields 
+              <a href="{{ route('taxonomy.create') }}"><button class="btn btn-primary">Add Custom Field</button></a>
+              <a href="{{ route('inventory.index') }}"><button class="btn btn-primary">Back</button></a></h3>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -124,6 +126,7 @@
               icon: "warning",
               buttons: true,
               dangerMode: true,
+              buttons: ['No, cancel it!', 'Yes, I am sure!'],
           })
           .then((willDelete) => {
             if (willDelete) {

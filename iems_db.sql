@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2022 at 03:17 PM
+-- Generation Time: Jun 29, 2022 at 02:01 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.28
 
@@ -145,8 +145,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (15, '2022_06_24_042203_create_taxonomies_table', 5),
 (17, '2022_06_24_050617_create_taxonomy_data_table', 7),
 (19, '2022_06_23_122047_create_equipment_table', 8),
-(23, '2022_06_27_064412_create_work_orders_table', 9),
-(24, '2022_06_28_060653_create_file_logs_table', 10);
+(24, '2022_06_28_060653_create_file_logs_table', 10),
+(25, '2022_06_29_070456_create_usersbkup_table', 11),
+(30, '2022_06_27_064412_create_work_orders_table', 14),
+(32, '2022_06_29_093143_create_work_order_images_table', 15);
 
 -- --------------------------------------------------------
 
@@ -179,8 +181,12 @@ CREATE TABLE `model_has_roles` (
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\Models\\User', 2),
 (2, 'App\\Models\\User', 1),
+(3, 'App\\Models\\User', 6),
+(3, 'App\\Models\\User', 7),
 (4, 'App\\Models\\User', 3),
-(4, 'App\\Models\\User', 4);
+(4, 'App\\Models\\User', 4),
+(4, 'App\\Models\\User', 5),
+(4, 'App\\Models\\User', 8);
 
 -- --------------------------------------------------------
 
@@ -286,7 +292,9 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (79, 'work_order.report', 'web', '2022-06-28 04:05:50', '2022-06-28 04:05:50'),
 (80, 'dashboard.clientStaff', 'web', '2022-06-28 06:07:06', '2022-06-28 06:07:06'),
 (81, 'clientUser', 'web', '2022-06-28 06:08:21', '2022-06-28 06:08:21'),
-(82, 'staffsUser', 'web', '2022-06-28 06:08:21', '2022-06-28 06:08:21');
+(82, 'staffsUser', 'web', '2022-06-28 06:08:21', '2022-06-28 06:08:21'),
+(83, 'user.profile', 'web', '2022-06-29 00:52:21', '2022-06-29 00:52:21'),
+(84, 'authRemove', 'web', '2022-06-29 01:30:10', '2022-06-29 01:30:10');
 
 -- --------------------------------------------------------
 
@@ -444,7 +452,15 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (79, 2),
 (80, 2),
 (81, 2),
-(82, 2);
+(82, 2),
+(83, 1),
+(83, 2),
+(83, 3),
+(83, 4),
+(84, 1),
+(84, 2),
+(84, 3),
+(84, 4);
 
 -- --------------------------------------------------------
 
@@ -578,9 +594,11 @@ CREATE TABLE `users` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'avatar.png',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `permissionid` bigint(20) DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -591,11 +609,36 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `permissionid`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'SuperAdmin', 'jyoti.610weblab@gmail.com', NULL, '$2y$10$mjuoGReNxtHNgDsgaoW8zuMK9LbjEQesmcCos45aGn/A6bwfwN5eW', NULL, 1, 1, NULL, 2, '2022-06-23 02:37:41', '2022-06-23 05:00:46'),
-(2, 'Admin', 'admin@gmail.com', NULL, '$2y$10$py6DGlIAEuY1K0RLhaU.k.Fpn9mXWhpkqcs7gCFdwib5CkiojJYvO', NULL, 1, 1, NULL, NULL, '2022-06-23 04:09:09', '2022-06-23 04:09:09'),
-(3, 'Nick', 'nick@gmail.com', NULL, '$2y$10$hTb1GpysrTERzj/0lWX9DOALgdQfNfKXzURNxZT7kRLaImhSZXd8S', NULL, NULL, 1, NULL, 1, '2022-06-27 01:49:58', '2022-06-27 01:52:31'),
-(4, 'Ele', 'ele@gmail.com', NULL, '$2y$10$d1CBaFOAqdCjpiW.K4CnpOcOqt.FUnHSejH1tcLCAi8y2fiesgnQi', NULL, NULL, 1, NULL, 1, '2022-06-27 01:53:37', '2022-06-27 01:53:37');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `image`, `remember_token`, `permissionid`, `status`, `deleted_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'SuperAdmin', 'jyoti.610weblab@gmail.com', NULL, '$2y$10$mjuoGReNxtHNgDsgaoW8zuMK9LbjEQesmcCos45aGn/A6bwfwN5eW', 'avatar2.png_1656483160.png', NULL, 1, 1, NULL, NULL, 1, '2022-06-23 02:37:41', '2022-06-29 00:42:40'),
+(2, 'Admin', 'admin@gmail.com', NULL, '$2y$10$py6DGlIAEuY1K0RLhaU.k.Fpn9mXWhpkqcs7gCFdwib5CkiojJYvO', 'avatar.png_1656483140.png', NULL, 1, 1, NULL, NULL, 1, '2022-06-23 04:09:09', '2022-06-29 00:42:20'),
+(3, 'Nick', 'nick@gmail.com', NULL, '$2y$10$hTb1GpysrTERzj/0lWX9DOALgdQfNfKXzURNxZT7kRLaImhSZXd8S', 'avatar4.png_1656483131.png', NULL, NULL, 1, '2022-06-29 02:34:55', NULL, 1, '2022-06-27 01:49:58', '2022-06-29 02:34:55'),
+(4, 'Ele', 'ele@gmail.com', NULL, '$2y$10$XRC/kX51O5qCDOuDqKLo/eEDwPSrx4zm5SJupvPx/r0JghVbdfBbS', 'avatar3.png_1656483113.png', NULL, NULL, 1, '2022-06-29 01:41:59', NULL, 1, '2022-06-27 01:53:37', '2022-06-29 01:41:59'),
+(5, 'Mick', 'mick@gmail.com', NULL, '$2y$10$OMVPW2oFq5h3zCRpNlZB2uqpb5iaSLQLPD4BZINDJM9Y00EhwmQme', 'avatar5.png_1656486781.png', NULL, NULL, 1, '2022-06-29 01:43:29', NULL, 1, '2022-06-29 01:43:01', '2022-06-29 01:43:29'),
+(6, 'Rahul', 'rahul@gmail.com', NULL, '$2y$10$Rs56cvXtL7tE4jMTdnIC7OOpfnN98C/qjhHNi395j9wphRmqW39bO', 'avatar5.png_1656489475.png', NULL, NULL, 1, NULL, NULL, 1, '2022-06-29 02:27:55', '2022-06-29 02:27:55'),
+(7, 'Yogesh', 'yogesh@gmail.com', NULL, '$2y$10$DLglPsQXdKjSYozgrZ.Pq.xojOxU4OwBzQfuLDWf40YumJmc3LfHW', 'avatar.png_1656489854.png', NULL, NULL, 1, NULL, NULL, 1, '2022-06-29 02:34:14', '2022-06-29 02:34:14'),
+(8, 'Sachin', 'sachin@gmail.com', NULL, '$2y$10$WMGKCrAgHJ55ZohaMjU.1.moCbvamabX/GJZyxhC3DX4DodCmwzMK', 'avatar4.png_1656489882.png', NULL, NULL, 1, NULL, NULL, 1, '2022-06-29 02:34:42', '2022-06-29 02:34:42');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usersbkup`
+--
+
+CREATE TABLE `usersbkup` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'avatar.png',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `permissionid` tinyint(4) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -609,10 +652,14 @@ CREATE TABLE `work_orders` (
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `staff_id` bigint(20) UNSIGNED NOT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
   `orderdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `start_date` timestamp NULL DEFAULT NULL,
+  `end_date` timestamp NULL DEFAULT NULL,
   `status` tinyint(4) NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -621,8 +668,42 @@ CREATE TABLE `work_orders` (
 -- Dumping data for table `work_orders`
 --
 
-INSERT INTO `work_orders` (`id`, `user_id`, `title`, `description`, `staff_id`, `orderdate`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 'First Order', 'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero\'s De Finibus Bonorum et Malorum for use in a type specimen book.', 3, '2022-06-27 20:01:10', 4, 1, 1, '2022-06-27 02:29:59', '2022-06-28 02:31:14');
+INSERT INTO `work_orders` (`id`, `user_id`, `title`, `description`, `staff_id`, `client_id`, `orderdate`, `start_date`, `end_date`, `status`, `created_by`, `updated_by`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Test Order', 'Lorem ipsum represents a long-held tradition for designers, typographers and the like. Some people hate it and argue for its demise, but others ignore the hate as they create awesome tools to help create filler text for everyone from bacon lovers to Charlie Sheen fans.', 8, 7, '2022-06-29 10:13:56', '1970-01-01 06:30:00', '1970-01-01 06:30:00', 3, 1, 1, NULL, '2022-06-29 04:40:37', '2022-06-29 04:43:56');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `work_order_images`
+--
+
+CREATE TABLE `work_order_images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `workorder_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` tinyint(4) NOT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `work_order_images`
+--
+
+INSERT INTO `work_order_images` (`id`, `workorder_id`, `user_id`, `title`, `image`, `type`, `created_by`, `updated_by`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Before start work', 'images/work_order/2022/06/29/photo1_62bc349131a1c.png', 0, 1, NULL, NULL, '2022-06-29 05:46:33', '2022-06-29 05:46:33'),
+(2, 1, 1, 'Before start work', 'images/work_order/2022/06/29/photo2_62bc34913254f.png', 0, 1, NULL, NULL, '2022-06-29 05:46:33', '2022-06-29 05:46:33'),
+(3, 1, 1, 'Before start work', 'images/work_order/2022/06/29/photo3_62bc349132d77.jpg', 0, 1, NULL, NULL, '2022-06-29 05:46:33', '2022-06-29 05:46:33'),
+(4, 1, 1, 'Before start work', 'images/work_order/2022/06/29/photo4_62bc3491336a4.jpg', 0, 1, NULL, NULL, '2022-06-29 05:46:33', '2022-06-29 05:46:33'),
+(5, 1, 1, 'End work', 'images/work_order/2022/06/29/ggdf_62bc37844ba78.jpg', 1, 1, NULL, NULL, '2022-06-29 05:59:08', '2022-06-29 05:59:08'),
+(6, 1, 1, 'End work', 'images/work_order/2022/06/29/gdfg_62bc37844c99f.jpg', 1, 1, NULL, NULL, '2022-06-29 05:59:08', '2022-06-29 05:59:08'),
+(7, 1, 1, 'End work', 'images/work_order/2022/06/29/ddsds_62bc37844d24c.jpg', 1, 1, NULL, NULL, '2022-06-29 05:59:08', '2022-06-29 05:59:08'),
+(8, 1, 1, 'End work', 'images/work_order/2022/06/29/photo-1579353977828-2a4eab540b9a_62bc378451d04.jpg', 1, 1, NULL, NULL, '2022-06-29 05:59:08', '2022-06-29 05:59:08');
 
 --
 -- Indexes for dumped tables
@@ -732,11 +813,28 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indexes for table `usersbkup`
+--
+ALTER TABLE `usersbkup`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `usersbkup_email_unique` (`email`);
+
+--
 -- Indexes for table `work_orders`
 --
 ALTER TABLE `work_orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `work_orders_user_id_foreign` (`user_id`);
+  ADD KEY `work_orders_user_id_foreign` (`user_id`),
+  ADD KEY `work_orders_staff_id_foreign` (`staff_id`),
+  ADD KEY `work_orders_client_id_foreign` (`client_id`);
+
+--
+-- Indexes for table `work_order_images`
+--
+ALTER TABLE `work_order_images`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `work_order_images_workorder_id_foreign` (`workorder_id`),
+  ADD KEY `work_order_images_user_id_foreign` (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -770,13 +868,13 @@ ALTER TABLE `inventories`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -806,13 +904,25 @@ ALTER TABLE `taxonomy_data`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `usersbkup`
+--
+ALTER TABLE `usersbkup`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `work_orders`
 --
 ALTER TABLE `work_orders`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `work_order_images`
+--
+ALTER TABLE `work_order_images`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -860,7 +970,16 @@ ALTER TABLE `taxonomy_data`
 -- Constraints for table `work_orders`
 --
 ALTER TABLE `work_orders`
-  ADD CONSTRAINT `work_orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `work_orders_client_id_foreign` FOREIGN KEY (`client_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `work_orders_staff_id_foreign` FOREIGN KEY (`staff_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `work_orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `work_order_images`
+--
+ALTER TABLE `work_order_images`
+  ADD CONSTRAINT `work_order_images_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `work_order_images_workorder_id_foreign` FOREIGN KEY (`workorder_id`) REFERENCES `work_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

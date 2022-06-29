@@ -10,22 +10,12 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ URL::asset('assests/dist/img/avatar2.png') }}" class="img-circle elevation-2" alt="User Image">
+        @if(Auth::user()->image)
+        <img class="img-circle elevation-2" src="{{asset('/public/image/'. Auth::user()->image)}}" alt="User Image">
+        @endif
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->name ?? ''}}</a>
-        </div>
-      </div>
-
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
+          <a href="{{ route('user.profile', Auth::user()->id)}}" class="d-block">{{ Auth::user()->name ?? ''}}</a>
         </div>
       </div>
 
@@ -81,6 +71,7 @@
           </li>
           @endrole
 
+          @role('admin|Super-Admin|Client')
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-indent"></i>
@@ -104,6 +95,8 @@
               </li>
             </ul>
           </li>
+          @endrole
+          @role('admin|Super-Admin|Staff')
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tasks"></i>
@@ -127,6 +120,7 @@
               </li>
             </ul>
           </li>
+          @endrole
           @endauth
           @auth
           <li class="nav-item">

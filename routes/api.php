@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+Route::group(['namespace' => 'App\Http\Controllers'], function()
+{
+    Route::post('update_workorder', 'Backend\WorkOrderController@update_workorder')->name('update_workorder');
 });

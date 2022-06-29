@@ -1,6 +1,11 @@
 @extends('layouts.auth')
 
 @section('content')
+@if(session('global'))
+  <div id="global_div" class="alert alert-success mb-1 mt-1">
+    {{ session('global') }}
+  </div>
+@endif
 <div class="login-box">
   <div class="login-logo">
     <a href="{{ url('/') }}"><b>IEMS</b></a>
@@ -9,7 +14,6 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign In</p>
-
       <form action="{{ route('login') }}" method="post">
       @csrf
         <div class="input-group mb-3">
@@ -82,4 +86,12 @@
     <!-- /.login-card-body -->
   </div>
 </div>
+@endsection
+
+@section('footerscript')
+<script>
+setTimeout(function(){
+  $('#global_div').remove();
+}, 5000);
+</script>
 @endsection

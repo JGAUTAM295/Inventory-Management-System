@@ -42,6 +42,7 @@
                     <th>No</th>
                     <th>Title</th>
                     <th>Staff Name</th>
+                    <th>Client Name</th>
                     <th>Order Date</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -50,23 +51,30 @@
                   <tbody>
                     @if($work_orders)
                     @foreach($work_orders as $key => $work_order)
+                    @php 
+                    $tmp = App\Models\User::find($work_order->staff_id);
+                    $client = App\Models\User::find($work_order->client_id); 
+                    @endphp
+                    @if(!empty($tmp) && !empty($client))
                   <tr>
                     <td>{{ $key+1 }}</td>
                     <td>{{ucwords($work_order->title) ?? ''}}</td>
-                    <td> @php $tmp = App\Models\User::find($work_order->staff_id) @endphp {{ucwords($tmp->name) ?? ''}}</td>
-                    <td>{{date('d M, Y h:i A', strtotime($work_order->orderdate)) ?? ''}}</td>
+                    <td> {{ucwords($tmp->name) ?? ''}}</td>
+                    <td> {{ucwords($client->name) ?? ''}}</td>
+                    <td>{{ date('d M, Y h:i A', strtotime($work_order->orderdate)) ?? ''}}</td>
                     <td class="project-state"> 
                       @if($work_order->status == '1') <span class="badge badge-danger">Cancelled</span>
-                      @elseif($work_order->status == '2') <span class="badge badge-info">Pending</span>
-                      @elseif($work_order->status == '3') <span class="badge badge-primary">Processing</span>
-                      @elseif($work_order->status == '4') <span class="badge badge-success">Complete</span>@endif
+                      @elseif($work_order->status == '2') <span class="badge badge-info bg-purple color-palette">Started</span>
+                      @elseif($work_order->status == '3') <span class="badge badge-info">Pending</span>
+                      @elseif($work_order->status == '4') <span class="badge badge-primary">Processing</span>
+                      @elseif($work_order->status == '5') <span class="badge badge-success">Complete</span>@endif
                     </td>
                     <td class="project-actions">
-                      <!-- <a class="btn btn-primary btn-sm" href="{{ route('work_order.show', $work_order->id) }}">
-                      
-                      </a> -->
+                      <a class="btn btn-primary btn-sm" href="{{ route('work_order.show', $work_order->id) }}">
+                        <i class="fas fa-eye"></i>  View
+                      </a>
                       <a class="btn btn-info btn-sm" href="{{ route('work_order.edit', $work_order->id) }}">
-                          <i class="fas fa-pencil-alt"></i>  Edit
+                        <i class="fas fa-pencil-alt"></i>  Edit
                       </a>
                       <form method="POST" action="{{ route('work_order.destroy', $work_order->id) }}" style="display: inline-block;">
                         @csrf
@@ -75,6 +83,7 @@
                       </form>
                       </td>
                   </tr>
+                  @endif
                   @endforeach
                   @else
                   <tr>

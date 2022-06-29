@@ -123,7 +123,7 @@
                     </div>
                   </div>
                   <div class="col-12">
-                    <a href="{{ route('inventory.show', $id) }}" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ route('inventory.show', $inventory->id) }}" class="btn btn-secondary">Cancel</a>
                     <input type="submit" value="Update Equipment" class="btn btn-success float-right">
                   </div>
                 </div>

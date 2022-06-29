@@ -115,6 +115,7 @@
               icon: "warning",
               buttons: true,
               dangerMode: true,
+              buttons: ['No, cancel it!', 'Yes, I am sure!'],
           })
           .then((willDelete) => {
             if (willDelete) {

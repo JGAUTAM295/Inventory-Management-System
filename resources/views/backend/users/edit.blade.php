@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('pagetitle', 'Project Edit')
+@section('pagetitle', 'User Edit')
 
 @section('head')
 
@@ -29,7 +29,7 @@
         <div class="col-md-12">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Edit {{ ucwords($user->title) ?? ''}} User Details</h3>
+              <h3 class="card-title">Edit {{ ucwords($user->name) ?? ''}} User Details</h3>
             </div>
             <div class="card-body">
                 <form action="{{ route('updateUser', ['id' => $user->id]) }}" method="POST" enctype="multipart/form-data">
@@ -62,6 +62,18 @@
                             <span class="text-danger text-left">{{ $errors->first('role') }}</span>
                             @endif
                         </div>
+
+                        <div class="form-group">
+                          <label for="inputProjectLeader">User Image <span class="text-danger">*</span></label>
+                          @if($user->image)
+                          <img class="image rounded-circle" src="{{asset('/public/image/'.$user->image)}}" alt="profile_image" style="width: 80px;height: 80px; padding: 10px; margin: 0px; ">
+                          @endif
+                          <input type="file" name="image" placeholder="Choose image" id="image">
+                          @error('image')
+                          <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                          @enderror
+                        </div>
+                        
 
                     </div>
                     <div class="col-md-6">

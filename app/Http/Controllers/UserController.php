@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\WorkOrder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use Auth;
-use DB;
-use Hash;
+use Auth, DB, Hash, File;
 
 class UserController extends Controller
 {
@@ -70,6 +69,19 @@ class UserController extends Controller
         $newUser = User::find($user->id);
         $newUser->status = $request->status;
         $newUser->updated_by =  Auth::user()->id;
+        
+        if($request->hasFile('image')){
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+
+            $file= $request->file('image');
+            $imagename = $file->getClientOriginalName();
+            $filename = $imagename.'_'.time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('public/Image'), $filename);
+            $newUser->image = $filename;  
+        }
+
         $newUser->save();
 
         $user->assignRole($request->input('roles'));
@@ -133,6 +145,27 @@ class UserController extends Controller
         $user->update($input);
         $user->status = $request->status;
         $user->updated_by =  Auth::user()->id;
+
+        if($request->hasFile('image')){
+            
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+
+            $image_path = public_path("/public/Image/".$user->image);
+            
+            if (File::exists($image_path)) 
+            {
+                File::delete($image_path);
+            }
+
+            $file= $request->file('image');
+            $imagename = $file->getClientOriginalName();
+            $filename = $imagename.'_'.time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('public/Image'), $filename);
+            $user->image = $filename;  
+        }
+
         $user->save();
 
         DB::table('model_has_roles')->where('model_id',$id)->delete();
@@ -168,5 +201,24 @@ class UserController extends Controller
             $q->where('name', '=', 'Staff');
         })->orderBy('id','DESC')->get();
         return view('backend.users.staff',compact('users'));
+    }
+
+    public function profile($id) 
+    {
+        $user = User::find($id);
+
+        return view('backend.users.profile',compact('user'));
+    }
+
+    public function authRemove()
+    {
+        $user = User::find(Auth::user()->id);
+        $staff_workOrder = WorkOrder::where('staff_id', Auth::user()->id)->delete();
+        $client_workOrder = WorkOrder::where('client_id', Auth::user()->id)->delete();
+        Auth::logout();
+        if ($user->delete()) 
+        {
+            return redirect()->route('login')->with('global', 'Your account has been deleted!');
+        }
     }
 }

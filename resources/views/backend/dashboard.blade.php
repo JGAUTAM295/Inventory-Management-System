@@ -96,7 +96,7 @@
                   <i class="fas fa-chart-pie mr-1"></i>
                   Monthy Orders
                 </h3>
-              
+
               </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content p-0">
@@ -271,6 +271,54 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 
 <script>
+    // Sales chart
+    var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d')
+  // $('#revenue-chart').get(0).getContext('2d');
+  
+  var salesChartData = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    datasets: [
+      {
+        label: 'Work Orders',
+        backgroundColor: 'rgba(60,141,188,0.9)',
+        borderColor: 'rgba(60,141,188,0.8)',
+        pointRadius: false,
+        pointColor: '#3b8bba',
+        pointStrokeColor: 'rgba(60,141,188,1)',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(60,141,188,1)',
+        data: <?php echo $order_monthwise; ?>
+      }
+    ]
+  }
+
+  var salesChartOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [{
+        gridLines: {
+          display: false
+        }
+      }],
+      yAxes: [{
+        gridLines: {
+          display: false
+        }
+      }]
+    }
+  }
+
+  // This will get the first returned node in the jQuery collection.
+  // eslint-disable-next-line no-unused-vars
+  var salesChart = new Chart(salesChartCanvas, { // lgtm[js/unused-local-variable]
+    type: 'bar',
+    data: salesChartData,
+    options: salesChartOptions
+  })
    //-------------
     //- PIE CHART -
     //-------------

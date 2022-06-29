@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWorkOrdersTable extends Migration
+class CreateWorkOrderImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,35 +13,25 @@ class CreateWorkOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('work_orders', function (Blueprint $table) {
+        Schema::create('work_order_images', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('workorder_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('title');
-            $table->longText('description');
-            $table->unsignedBigInteger('staff_id');
-            $table->unsignedBigInteger('client_id');
-            $table->timestamp('orderdate');
-            $table->timestamp('start_date')->nullable();
-            $table->timestamp('end_date')->nullable();
-            $table->tinyInteger('status')->length(4);
+            $table->string('title')->nullable();
+            $table->string('image');
+            $table->tinyInteger('type')->length(4);
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('user_id')
+            $table->foreign('workorder_id')
                 ->references('id')
-                ->on('users')
+                ->on('work_orders')
                 ->onUpdate('cascade') 
                 ->onDelete('cascade');
             
-            $table->foreign('staff_id')
-                ->references('id')
-                ->on('users')
-                ->onUpdate('cascade') 
-                ->onDelete('cascade');
-
-            $table->foreign('client_id')
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onUpdate('cascade') 
@@ -56,6 +46,6 @@ class CreateWorkOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('work_orders');
+        Schema::dropIfExists('work_order_images');
     }
 }

@@ -29,8 +29,24 @@ class InventoryController extends Controller
      */
     public function index(Request $request)
     {
-        $inventories = Inventory::orderBy('id','DESC')->get();
-        return view('backend.inventories.list', compact('inventories'));
+        if (Auth::check()) 
+        {
+            if(Auth::user()->hasRole('admin|Super-Admin'))
+            {
+                $inventories = Inventory::orderBy('id','DESC')->get();
+            }
+            if(Auth::user()->hasRole('Staff|Client'))
+            {
+                $inventories = Inventory::where('user_id', Auth::user()->id)->orderBy('id','DESC')->get();
+            }
+
+            return view('backend.inventories.list', compact('inventories'));
+        }
+        else
+        {
+            return redirect()->route('dashboard');
+        }
+        
     }
 
     /**

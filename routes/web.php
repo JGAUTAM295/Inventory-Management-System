@@ -149,47 +149,9 @@ Route::get('logout', [
 });
 
   Route::group(['middleware' => ['auth']], function() {
-    // Route::resource('roles', RoleController::class);
-    // Route::resource('users', UserController::class);
 
     Route::get('/dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/clientStaff/{year}', [App\Http\Controllers\Backend\DashboardController::class, 'clientStaff'])->name('dashboard.clientStaff');
-    
-   
-    
-    // Route::get('/roles', [PermissionController::class,'Permission']);
-
-    // Route::get('/users/role', [App\Http\Controllers\Backend\RoleController::class, 'index'])->name('usersRole');
-    // Route::get('/users/role/add', [App\Http\Controllers\Backend\RoleController::class, 'create'])->name('addUserRole');
-    // Route::post('/users/role/store', [App\Http\Controllers\Backend\RoleController::class, 'store'])->name('storeUserRole');
-    // Route::get('/users/role/edit/{id}', [App\Http\Controllers\Backend\RoleController::class, 'edit'])->name('editUserRole');
-    // Route::post('/users/role/update/{id}', [App\Http\Controllers\Backend\RoleController::class, 'update'])->name('updateUserRole');
-    // Route::delete('/users/role/delete/{id}', [App\Http\Controllers\Backend\RoleController::class, 'destroy'])->name('deleteUserRole');
-
-    
-    // Route::get('/projects', [App\Http\Controllers\Backend\ProjectController::class, 'index'])->name('projects');
-    // Route::get('/add-projects', [App\Http\Controllers\Backend\ProjectController::class, 'create'])->name('addProject');
-    // Route::post('/store-projects', [App\Http\Controllers\Backend\ProjectController::class, 'store'])->name('storeProject');
-    // Route::get('/projects/edit/{id}', [App\Http\Controllers\Backend\ProjectController::class, 'edit'])->name('editProject');
-    // Route::post('/projects/update/{id}', [App\Http\Controllers\Backend\ProjectController::class, 'update'])->name('updateProject');
-    // Route::get('/projects/{slug}', [App\Http\Controllers\Backend\ProjectController::class, 'show'])->name('viewProject');
-    // Route::delete('/delete-projects/{id}', [App\Http\Controllers\Backend\ProjectController::class, 'destroy'])->name('deleteProject');
-
-    // Route::get('/projects/{id}/task', [App\Http\Controllers\Backend\TaskController::class, 'index'])->name('tasks');
-    // Route::get('/projects/{id}/task/add', [App\Http\Controllers\Backend\TaskController::class, 'create'])->name('addTask');
-    // Route::post('/projects/task/store', [App\Http\Controllers\Backend\TaskController::class, 'store'])->name('storeTask');
-    // Route::get('/projects/task/edit/{id}', [App\Http\Controllers\Backend\TaskController::class, 'edit'])->name('editTask');
-    // Route::post('/projects/task/update/{id}', [App\Http\Controllers\Backend\TaskController::class, 'update'])->name('updateTask');
-    // Route::get('/projects/{projectid}/task/{id}', [App\Http\Controllers\Backend\TaskController::class, 'show'])->name('viewTask');
-    // Route::delete('/projects/task/delete/{id}', [App\Http\Controllers\Backend\TaskController::class, 'destroy'])->name('deleteTask');
-    
-    // Route::get('/tags', [App\Http\Controllers\Backend\TagController::class, 'index'])->name('tags');
-    // Route::get('/add-tags', [App\Http\Controllers\Backend\TagController::class, 'create'])->name('addTag');
-    // Route::post('/store-tags', [App\Http\Controllers\Backend\TagController::class, 'store'])->name('storeTag');
-    // Route::post('/tags/edit', [App\Http\Controllers\Backend\TagController::class, 'edit'])->name('editTag');
-    // Route::post('/tags/update', [App\Http\Controllers\Backend\TagController::class, 'update'])->name('updateTag');
-    // Route::get('/tags/{slug}', [App\Http\Controllers\Backend\TagController::class, 'show'])->name('viewTag');
-    // Route::delete('/delete-tags/{id}', [App\Http\Controllers\Backend\TagController::class, 'destroy'])->name('deleteTag');
-    
-    // Route::post('/store-review', [App\Http\Controllers\Backend\ReviewController::class, 'store'])->name('storeReview');
+    Route::get('/profile/{id}', [App\Http\Controllers\UserController::class, 'profile'])->name('user.profile');
+    Route::get('/delete-your-account}', [App\Http\Controllers\UserController::class, 'authRemove'])->name('authRemove');
 });

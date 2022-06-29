@@ -63,13 +63,28 @@
                           <label for="inputStaff">Staff <span class="text-danger">*</span></label>
                           <select id="inputStaff" class="form-control" name="staff_id" required>
                             <option selected disabled>Select one</option>
-                            @foreach($users as $val)
+                            @foreach($staffs as $val)
                             <option value="{{$val->id ?? ''}}">{{ucwords($val->name) ?? ''}}</option>
                             @endforeach
                           </select>
                           @error('staff_id')
                           <span class="invalid-feedback" role="alert" style="display:block;">
                             <strong>{{ $message }}</strong>
+                          </span>
+                          @enderror
+                      </div>
+
+                      <div class="form-group {{ $errors->has('client_id') ? 'has-error' : ''}}">
+                          <label for="inputClient">Client <span class="text-danger">*</span></label>
+                          <select id="inputClient" class="form-control" name="client_id" required>
+                            <option selected disabled>Select one</option>
+                            @foreach($clients as $val)
+                            <option value="{{$val->id ?? ''}}">{{ucwords($val->name) ?? ''}}</option>
+                            @endforeach
+                          </select>
+                          @error('client_id')
+                          <span class="invalid-feedback" role="alert" style="display:block;">
+                            <strong>{{ $client_id }}</strong>
                           </span>
                           @enderror
                       </div>
@@ -88,9 +103,10 @@
                         <select id="inputStatus" class="form-control custom-select" name="status">
                           <option selected disabled>Select one</option>
                           <option value="1">Cancelled</option>
-                          <option value="2">Pending</option>
-                          <option value="3">Processing</option>
-                          <option value="4">Complete</option>
+                          <option value="2">Started</option>
+                          <option value="3">Pending</option>
+                          <option value="4">Processing</option>
+                          <option value="5">Complete</option>
                         </select>
                       @error('status')
                         <span class="invalid-feedback" role="alert" style="display:block;">

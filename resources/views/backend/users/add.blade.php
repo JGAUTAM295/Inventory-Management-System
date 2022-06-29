@@ -42,42 +42,46 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="inputName">Name  <span class="text-danger">*</span></label>
-                            <input type="text" id="inputName" class="form-control" name="name" required>
+                          <label for="inputName">Name  <span class="text-danger">*</span></label>
+                          <input type="text" id="inputName" class="form-control" name="name" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="inputPassword">Password <span class="text-danger">*</span></label>
-                            <input type="password" id="inputPassword" class="form-control" name="password" required>
+                          <label for="inputPassword">Password <span class="text-danger">*</span></label>
+                          <input type="password" id="inputPassword" class="form-control" name="password" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="inputProjectLeader">User Role <span class="text-danger">*</span></label>
-                            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control')) !!}
+                          <label for="inputProjectLeader">User Role <span class="text-danger">*</span></label>
+                          {!! Form::select('roles[]', $roles,[], array('class' => 'form-control')) !!}
                         </div>
 
+                        <div class="form-group">
+                          <label for="inputProjectLeader">User Image <span class="text-danger">*</span></label>
+                          <input type="file" name="image" placeholder="Choose image" id="image">
+                          @error('image')
+                          <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                          @enderror
+                        </div>
                     </div>
                     <div class="col-md-6">
-
-                    <div class="form-group">
+                      <div class="form-group">
                         <label for="inputEmail">Email  <span class="text-danger">*</span></label>
                         <input type="email" id="inputEmail" class="form-control" name="email" required>
-                    </div>
-
-                    <div class="form-group">
+                      </div>
+                      <div class="form-group">
                         <label for="inputCPassword">Confirm Password <span class="text-danger">*</span></label>
                         <input type="password" id="inputCPassword" class="form-control" name="confirm-password" required>
-                    </div>
-                    
-                    <div class="form-group">
+                      </div>
+                      
+                      <div class="form-group">
                         <label for="inputStatus">Status</label>
                         <select id="inputStatus" class="form-control custom-select" name="status">
                             <option selected disabled>Select one</option>
                             <option value="1">Active</option>
                             <option value="2">Deactive</option>
                         </select>
-                    </div>
-
+                      </div>
                     </div>
                 </div> 
             

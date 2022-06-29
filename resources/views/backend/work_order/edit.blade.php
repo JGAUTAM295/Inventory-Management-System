@@ -75,11 +75,26 @@
                           <label for="inputStaff">Staff <span class="text-danger">*</span></label>
                           <select id="inputStaff" class="form-control" name="staff_id" required>
                             <option selected disabled>Select one</option>
-                            @foreach($users as $val)
+                            @foreach($staffs as $val)
                             <option value="{{$val->id ?? ''}}" @if($work_order->staff_id == $val->id) selected @endif>{{ucwords($val->name) ?? ''}}</option>
                             @endforeach
                           </select>
                           @error('staff_id')
+                          <span class="invalid-feedback" role="alert" style="display:block;">
+                            <strong>{{ $message }}</strong>
+                          </span>
+                          @enderror
+                      </div>
+
+                      <div class="form-group {{ $errors->has('client_id') ? 'has-error' : ''}}">
+                          <label for="inputClient">Client <span class="text-danger">*</span></label>
+                          <select id="inputClient" class="form-control" name="client_id" required>
+                            <option selected disabled>Select one</option>
+                            @foreach($clients as $val)
+                            <option value="{{$val->id ?? ''}}" @if($work_order->client_id == $val->id) selected @endif>{{ucwords($val->name) ?? ''}}</option>
+                            @endforeach
+                          </select>
+                          @error('client_id')
                           <span class="invalid-feedback" role="alert" style="display:block;">
                             <strong>{{ $message }}</strong>
                           </span>
@@ -101,9 +116,10 @@
                         <select id="inputStatus" class="form-control custom-select" name="status">
                           <option selected disabled>Select one</option>
                           <option value="1" @if($work_order->status == '1') selected @endif>Cancelled</option>
-                          <option value="2" @if($work_order->status == '2') selected @endif>Pending</option>
-                          <option value="3" @if($work_order->status == '3') selected @endif>Processing</option>
-                          <option value="4" @if($work_order->status == '4') selected @endif>Complete</option>
+                          <option value="2" @if($work_order->status == '2') selected @endif>Started</option>
+                          <option value="3" @if($work_order->status == '3') selected @endif>Pending</option>
+                          <option value="4" @if($work_order->status == '4') selected @endif>Processing</option>
+                          <option value="5" @if($work_order->status == '5') selected @endif>Complete</option>
                         </select>
                         @error('status')
                         <span class="invalid-feedback" role="alert" style="display:block;">

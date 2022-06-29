@@ -138,6 +138,7 @@ class EquipmentController extends Controller
      */
     public function edit($id, $eid)
     {
+        //echo '<pre>'; print_r($id); echo '</pre>';
         $inventory = Inventory::find($id);
         $equipment = Equipment::find($eid);
         $cfs = Taxonomy::where('status', '1')->orderBy('order_no','ASC')->get();
