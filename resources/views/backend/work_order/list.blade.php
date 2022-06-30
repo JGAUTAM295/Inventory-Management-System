@@ -58,9 +58,9 @@
                     @if(!empty($tmp) && !empty($client))
                   <tr>
                     <td>{{ $key+1 }}</td>
-                    <td>{{ucwords($work_order->title) ?? ''}}</td>
-                    <td> {{ucwords($tmp->name) ?? ''}}</td>
-                    <td> {{ucwords($client->name) ?? ''}}</td>
+                    <td>{{ ucwords($work_order->title) ?? ''}}</td>
+                    <td>{{ ucwords($work_order->staff->name) ?? ''}}</td>
+                    <td>{{ ucwords($work_order->client->name) ?? ''}}</td>
                     <td>{{ date('d M, Y h:i A', strtotime($work_order->orderdate)) ?? ''}}</td>
                     <td class="project-state"> 
                       @if($work_order->status == '1') <span class="badge badge-danger">Cancelled</span>

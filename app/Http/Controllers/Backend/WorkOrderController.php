@@ -33,6 +33,10 @@ class WorkOrderController extends Controller
             {
                 $work_orders = WorkOrder::where('staff_id', Auth::user()->id)->orderBy('id','DESC')->get();
             }
+            if(Auth::user()->hasRole('Client'))
+            {
+                $work_orders = WorkOrder::where('client_id', Auth::user()->id)->orderBy('id','DESC')->get();
+            }
 
             return view('backend.work_order.list', compact('work_orders'));
         }
@@ -241,17 +245,17 @@ class WorkOrderController extends Controller
                     }
                     else
                     {
-                        return response()->json(['invalid_file_format'], 422);
+                        return response()->json(['status' => 'false', 'message' => 'invalid_file_format'], 422);
                     }
                 }
             }
             
-            return response()->json(['status' => 'true', 'data' => 'Data Updated Successfully!'], 200);
+            return response()->json(['status' => 'true', 'message' => 'Data Updated Successfully!'], 200);
           
         }
         else
         {
-            return response()->json(['status' => 'false', 'data' => 'Work Order Not Found!'],200);
+            return response()->json(['status' => 'false', 'message' => 'Work Order Not Found!'], 404);
         }
     }
 }

@@ -69,6 +69,7 @@ class TaxonomyController extends Controller
         {
             $newTaxonomy = New Taxonomy();
             $newTaxonomy->name = $request->name;
+            $newTaxonomy->slug = $this->clean($request->name);
             $newTaxonomy->input_field_type = $request->input_field_type;
             $newTaxonomy->input_required = $request->input_required;
             $newTaxonomy->order_no = $request->order_no;
@@ -124,6 +125,7 @@ class TaxonomyController extends Controller
 
         $taxonomy = Taxonomy::find($id);
         $taxonomy->name = $request->name;
+        $taxonomy->slug = $this->clean($request->name);
         $taxonomy->input_field_type = $request->input_field_type;
         $taxonomy->input_required = $request->input_required;
         $taxonomy->order_no = $request->order_no;
@@ -149,4 +151,13 @@ class TaxonomyController extends Controller
             return back()->with('success', $taxonomy->name.' Taxonomy has been deleted successfully!');
         }
     }
+
+    public function clean($string) {
+        $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+        $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+        $string = strtolower(preg_replace('/-+/', '-', $string));
+
+        return  rtrim($string, '-'); // Replaces multiple hyphens with single one.
+
+     }
 }

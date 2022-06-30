@@ -16,6 +16,7 @@ class CreateTaxonomiesTable extends Migration
         Schema::create('taxonomies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug');
             $table->string('input_field_type');
             $table->tinyInteger('input_required')->length(4);
             $table->unsignedBigInteger('order_no')->length(255);

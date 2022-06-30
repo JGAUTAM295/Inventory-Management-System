@@ -47,7 +47,7 @@
                 <thead>
                     @foreach(json_decode($equipment->equipment_info, true) as $key => $value)
                     <tr>
-                        <td><b>{{ucwords($key) ?? '-'}}</b></td>
+                        <td><b> {!! $equipment->taxonomy(substr($key, strpos($key, "=") + 1)) ?? '-' !!}</b></td>
                         <td>{{ucwords($value) ?? '-'}}</td>
                     </tr>
                     @endforeach

@@ -36,7 +36,9 @@
               </div>
               <div class="card-body">
                 <h4 class="card-title qrcode_title mb-3">{{ucwords($equipment->title) ?? ''}}</h4>
-                <div class="qr-code"> {!! str_replace('<?xml version="1.0" encoding="UTF-8"?>','',QrCode::size(170)->generate(route('equipment.downloadPDF',['id'=>$inventory->id,'eid'=>$equipment->id]))); !!}</div>
+                <div class="qr-code"> 
+                  {!! str_replace('<?xml version="1.0" encoding="UTF-8"?>','',QrCode::size(170)->generate(route('equipment.downloadPDF',['id'=>$inventory->id,'eid'=>$equipment->id]))); !!}
+                </div>
               </div>
               <div class="card-footer">
               <p class="inner-text">Use your phone camera or QR scanner app to scan QR.</p>

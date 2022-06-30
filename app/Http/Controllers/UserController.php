@@ -33,8 +33,11 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $users = User::orderBy('id','DESC')->paginate(15);
-        return view('backend.users.list',compact('users'))->with('i', ($request->input('page', 1) - 1) * 15);
+        $users = User::whereHas('roles', function ($q) {
+            $q->where('name', '!=', 'Super-Admin');
+        })->orderBy('id','DESC')->get();
+
+        return view('backend.users.list',compact('users'));
     }
 
     /**

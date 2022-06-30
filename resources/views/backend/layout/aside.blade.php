@@ -69,9 +69,6 @@
               </li>
             </ul>
           </li>
-          @endrole
-
-          @role('admin|Super-Admin|Client')
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-indent"></i>
@@ -96,7 +93,7 @@
             </ul>
           </li>
           @endrole
-          @role('admin|Super-Admin|Staff')
+          @role('Super-Admin|Staff|Client')
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tasks"></i>
@@ -116,6 +113,35 @@
                 <a href="{{ route('work_order.create')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Work Order</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+              Reports
+              <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('employees.report')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Employees Report</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('equipment.report')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Equipment Report</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('work_order.report')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Work Order Report</p>
                 </a>
               </li>
             </ul>

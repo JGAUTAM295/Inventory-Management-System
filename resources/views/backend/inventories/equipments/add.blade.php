@@ -64,7 +64,7 @@
                           <label for="inputName">{{ucwords($cf->name) ?? ''}}  @if($cf->input_required != "") <span class="text-danger">*</span> @endif</label>
                           @if($cf->input_field_type == 'Select')
                           
-                          <select id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control custom-select" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" @if($cf->input_required != "") required @endif>
+                          <select id="input{{ucwords($cf->slug) ?? ''}}" class="form-control custom-select" name="{{$cf->slug.'='.$cf->id ?? ''}}" @if($cf->input_required != "") required @endif>
                             <option selected disabled>Select one</option>
                             @foreach(App\Models\Taxonomy::getTaxonomyData($cf->id) as $val)
                             <option value="{{$val->name ?? ''}}">{{ucwords($val->name) ?? ''}}</option>
@@ -73,12 +73,12 @@
 
                           @elseif($cf->input_field_type == 'Textarea')
                           
-                          <textarea id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control" rows="3" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" placeholder="Enter ..." @if($cf->input_required != "") required @endif></textarea>
+                          <textarea id="input{{ucwords($cf->slug) ?? ''}}" class="form-control" rows="3" name="{{$cf->slug.'='.$cf->id ?? ''}}" placeholder="Enter ..." @if($cf->input_required != "") required @endif></textarea>
                      
                           @elseif($cf->input_field_type == 'Date')
                           
                           <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                            <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control datetimepicker-input" data-target="#reservationdate" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" @if($cf->input_required != "") required @endif/>
+                            <input type="text" id="input{{ucwords($cf->slug) ?? ''}}" class="form-control datetimepicker-input" data-target="#reservationdate" name="{{$cf->slug.'='.$cf->id ?? ''}}" @if($cf->input_required != "") required @endif/>
                             <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -86,15 +86,15 @@
                           
                           @elseif($cf->input_field_type == 'Number')
                           
-                          <input type="number" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control {{strtolower($cf->input_field_type).'css'}}" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" @if($cf->input_required != "") required @endif>
+                          <input type="number" id="input{{ucwords($cf->slug) ?? ''}}" class="form-control {{strtolower($cf->input_field_type).'css'}}" name="{{$cf->slug.'='.$cf->id ?? ''}}" @if($cf->input_required != "") required @endif>
                           
                           @elseif($cf->input_field_type == 'Text')
                           
-                          <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control {{strtolower($cf->input_field_type).'css'}}" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" @if($cf->input_required != "") required @endif>
+                          <input type="text" id="input{{ucwords($cf->slug) ?? ''}}" class="form-control {{strtolower($cf->input_field_type).'css'}}" name="{{$cf->slug.'='.$cf->id ?? ''}}" @if($cf->input_required != "") required @endif>
                           
                           @else
                           
-                          <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" @if($cf->input_required != "") required @endif>
+                          <input type="text" id="input{{ucwords($cf->slug) ?? ''}}" class="form-control" name="{{$cf->slug.'='.$cf->id ?? ''}}" @if($cf->input_required != "") required @endif>
                           
                           @endif
                         </div>

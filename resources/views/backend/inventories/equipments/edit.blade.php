@@ -54,39 +54,35 @@
                 @csrf
                 <input type="hidden" name="id" value="{{ $inventory->id ?? '' }}">
                 <div class="row">
-
-
-                <div class="col-md-12 dynamicDiv">
-                        <div class="form-group col">
-                          <label for="inputTitle">Title <span class="text-danger">*</span></label>
-                          <input type="text" id="inputTitle" class="form-control" name="title" value="{{$equipment->title ?? ''}}" required>
-                        </div>
+                  <div class="col-md-12 dynamicDiv">
+                      <div class="form-group col">
+                        <label for="inputTitle">Title <span class="text-danger">*</span></label>
+                        <input type="text" id="inputTitle" class="form-control" name="title" value="{{$equipment->title ?? ''}}" required>
+                      </div>
                       <!-- cost_(afl_) -->
-                      @if($cfs)
+                      @if(!empty($cfs))
                         @foreach($cfs as $cf)
-                        @foreach(json_decode($equipment->equipment_info, true) as $key => $value)
-                        
-                        @if ($key === strtolower(str_replace(' ', '_', $cf->name))) 
+                        @php $colname = $cf->slug.'='.$cf->id; @endphp
+                        <!-- @ if($jsonEquipment[$colname] === $colname) -->
                        
                         <div class="form-group col">
                           <label for="inputName">{{ucwords($cf->name) ?? ''}}  @if($cf->input_required != "") <span class="text-danger">*</span> @endif</label>
                           @if($cf->input_field_type == 'Select')
-                          
-                          <select id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control custom-select" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" @if($cf->input_required != "") required @endif>
+                          <select id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control custom-select" name="{{$cf->slug.'='.$cf->id ?? ''}}" @if($cf->input_required != "") required @endif>
                             <option selected disabled>Select one</option>
                             @foreach(App\Models\Taxonomy::getTaxonomyData($cf->id) as $val)
-                            <option value="{{$val->name ?? ''}}" @if($value == $val->name) selected @endif>{{ucwords($val->name) ?? ''}}</option>
+                            <option value="{{$val->name ?? ''}}" @if($jsonEquipment[$colname] == $val->name) selected @endif>{{ucwords($val->name) ?? ''}}</option>
                             @endforeach
                           </select>
 
                           @elseif($cf->input_field_type == 'Textarea')
                           
-                          <textarea id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control" rows="3" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" placeholder="Enter ..." @if($cf->input_required != "") required @endif>{{$value ?? ''}}</textarea>
+                          <textarea id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control" rows="3" name="{{$cf->slug.'='.$cf->id ?? ''}}" placeholder="Enter ..." @if($cf->input_required != "") required @endif>{{$jsonEquipment[$colname] ?? ''}}</textarea>
                      
                           @elseif($cf->input_field_type == 'Date')
                           
                           <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                            <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control datetimepicker-input" data-target="#reservationdate" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" value="{{$value ?? ''}}" @if($cf->input_required != "") required @endif/>
+                            <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control datetimepicker-input" data-target="#reservationdate" name="{{$cf->slug.'='.$cf->id ?? ''}}" value="{{$jsonEquipment[$colname] ?? ''}}" @if($cf->input_required != "") required @endif/>
                             <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -94,21 +90,20 @@
 
                           @elseif($cf->input_field_type == 'Number')
                           
-                          <input type="number" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control {{strtolower($cf->input_field_type).'css'}}" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" value="{{$value ?? ''}}" @if($cf->input_required != "") required @endif>
+                          <input type="number" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control {{strtolower($cf->input_field_type).'css'}}" name="{{$cf->slug.'='.$cf->id ?? ''}}" value="{{$jsonEquipment[$colname] ?? ''}}" @if($cf->input_required != "") required @endif>
                           
                           
                           @elseif($cf->input_field_type == 'Text')
                           
-                          <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control {{strtolower($cf->input_field_type).'css'}}" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" value="{{$value ?? ''}}" @if($cf->input_required != "") required @endif>
+                          <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control {{strtolower($cf->input_field_type).'css'}}" name="{{$cf->slug.'='.$cf->id ?? ''}}" value="{{$jsonEquipment[$colname]?? ''}}" @if($cf->input_required != "") required @endif>
                           
                           @else
                           
-                          <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control" name="{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" value="{{$value ?? ''}}" @if($cf->input_required != "") required @endif>
+                          <input type="text" id="input{{strtolower(str_replace(' ', '_', $cf->name)) ?? ''}}" class="form-control" name="{{$cf->slug.'='.$cf->id ?? ''}}" value="{{$jsonEquipment[$colname] ?? ''}}" @if($cf->input_required != "") required @endif>
                           
                           @endif
                         </div>
-                        @endif
-                        @endforeach
+                        <!-- @ endif -->
                         @endforeach
                       @endif
                       

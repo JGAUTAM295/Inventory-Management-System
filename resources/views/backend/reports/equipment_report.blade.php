@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('pagetitle', 'Users List')
+@section('pagetitle', 'Equipment Report')
 
 @section('head')
  <!-- DataTables -->
@@ -15,12 +15,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>Users <a href="{{ route('addUser') }}"><button class="btn btn-primary">Add User</button></a></h3>
+            <h3>Equipment Report <a href="{{ route('dashboard') }}"><button class="btn btn-primary">Back</button></a></h3>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-              <li class="breadcrumb-item active">Users</li>
+              <li class="breadcrumb-item active">Equipment Report</li>
             </ol>
           </div>
         </div>
@@ -32,11 +32,8 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            @include('backend.layout.messages')
+          @include('backend.layout.messages')
             <div class="card">
-              <!-- <div class="card-header">
-                <h3 class="card-title">DataTable with default features</h3>
-              </div> -->
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped mt-3">
@@ -44,40 +41,29 @@
                   <tr>
                     <th>No</th>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>User Role</th>
+                    <th>Inventory Name</th>
+                    <th>Equipment Info</th>
+                    <th>Publish Date</th>
                     <th>Status</th>
-                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                    @if($users)
-                    @foreach($users as $key => $user)
+                    @if($equipments)
+                    @foreach($equipments as $key => $equipment)
                   <tr>
                     <td>{{ $key+1 }}</td>
-                    <td>{{ucwords($user->name) ?? ''}}</td>
-                    <td>{{$user->email ?? ''}}</td>
+                    <td>{{ ucwords($equipment->title) ?? ''}}</td>
+                    <td>{{ ucwords($equipment->inventory->name) ?? ''}}</td>
                     <td>
-                      @foreach($user->roles as $role)
-                        <span class="badge bg-primary">{{ $role->name }}</span>
+                      @foreach(json_decode($equipment->equipment_info, true) as $key => $value)
+                        <b>{!! $equipment->taxonomy(substr($key, strpos($key, "=") + 1)) ?? '-' !!}</b>: {{ucwords($value) ?? '-'}}<br>
                       @endforeach
                     </td>
+                    <td>{{ date('d M, Y h:i A', strtotime($equipment->created_at)) ?? ''}}</td>
                     <td class="project-state">
-                    @if($user->status == '1') <span class="badge badge-success">Active</span>
-                    @elseif($user->status == '2') <span class="badge badge-danger">Deactive</span>
+                    @if($equipment->status == '1') <span class="badge badge-success">Active</span>
+                    @elseif($equipment->status == '2') <span class="badge badge-danger">Deactive</span>
                     @endif</td>
-                    <td class="project-actions">
-                      <a class="btn btn-info btn-sm" href="{{ route('editUser', ['id' => $user->id]) }}">
-                          <i class="fas fa-pencil-alt">
-                          </i>
-                          Edit
-                      </a>
-                      <form method="POST" action="{{ route('deleteUser', $user->id) }}" style="display: inline-block;">
-                        @csrf
-                        <input name="_method" type="hidden" value="DELETE">
-                        <button type="submit" class="btn btn-danger btn-sm show_confirm"><i class="fas fa-trash"></i>Delete</button>
-                      </form>
-                    </td>
                   </tr>
                   @endforeach
                   @else
@@ -120,28 +106,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
 <script type="text/javascript">
-
-  //User Delete Function
-  $('.show_confirm').click(function(event) {
-      var form =  $(this).closest("form");
-      var name = $(this).data("name");
-      event.preventDefault();
-      swal({
-          title: `Are you sure you want to delete this user?`,
-          text: "If you delete this, it will be gone forever.",
-          icon: "warning",
-          buttons: true,
-          dangerMode: true,
-          buttons: ['No, cancel it!', 'Yes, I am sure!'],
-      })
-      .then((willDelete) => {
-        if (willDelete) {
-          form.submit();
-        }
-      });
-  });
-  
-  //Integrate Datatable in User Table
+ 
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,

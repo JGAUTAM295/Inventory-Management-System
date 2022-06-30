@@ -76,6 +76,9 @@ class EquipmentController extends Controller
             $newEquipment->equipment_info = json_encode($request->except('_token', 'title', 'status'));
             $newEquipment->status = $request->status;
             $newEquipment->created_by = Auth::user()->id;
+
+            //echo '<pre>'; print_r($newEquipment); echo '</pre>';
+        
             
             if($newEquipment->save())
             {
@@ -108,16 +111,17 @@ class EquipmentController extends Controller
     {
         $inventory = Inventory::find($id);
         $equipment = Equipment::find($eid);
+        $cfs = Taxonomy::where('status', '1')->orderBy('order_no','ASC')->get();
         $qrcode = base64_encode(\QrCode::format('svg')->size(170)->errorCorrection('H')->generate(route('equipment.downloadPDF',['id'=>$inventory->id,'eid'=>$equipment->id])));
 
-        view()->share('backend.inventories.equipments.pdf', compact('inventory', 'equipment', 'qrcode'));
+        view()->share('backend.inventories.equipments.pdf', compact('inventory', 'equipment', 'qrcode', 'cfs'));
 
-        $pdf = PDF::loadView('backend.inventories.equipments.pdf', compact('inventory', 'equipment','qrcode'))->setOptions(['defaultFont' => 'sans-serif']);
-        $filename = strtolower(str_replace(' ', '_', $equipment->title)).'_'.time().'.pdf';
+        $pdf = PDF::loadView('backend.inventories.equipments.pdf', compact('inventory', 'equipment','qrcode', 'cfs'))->setOptions(['defaultFont' => 'sans-serif']);
+        $filename = strtolower(str_replace(' ', '_', $equipment->title)).'_'.rand().'.pdf';
         //return $pdf->download($filename);
-         return $pdf->stream($filename);
+        return $pdf->stream($filename);
         
-        //return view('backend.inventories.equipments.pdf', compact('inventory', 'equipment','qrcode'));
+        //return view('backend.inventories.equipments.pdf', compact('inventory', 'equipment','qrcode', 'cfs'));
         
     }
 
@@ -142,8 +146,9 @@ class EquipmentController extends Controller
         $inventory = Inventory::find($id);
         $equipment = Equipment::find($eid);
         $cfs = Taxonomy::where('status', '1')->orderBy('order_no','ASC')->get();
+        $jsonEquipment = json_decode($equipment->equipment_info, true); 
 
-        return view('backend.inventories.equipments.edit', compact('cfs', 'inventory', 'equipment'));
+        return view('backend.inventories.equipments.edit', compact('cfs', 'inventory', 'equipment', 'jsonEquipment'));
     }
 
     /**
@@ -156,7 +161,8 @@ class EquipmentController extends Controller
     public function update(Request $request, Equipment $equipment)
     {
         $request->validate([
-            'title'   => 'required|unique:equipment',
+            //'title'   => 'required|unique:equipment',
+            'title'   => 'required',
             'status' => 'required',
         ]);
 
@@ -285,6 +291,8 @@ class EquipmentController extends Controller
                         // master lead data
                         $EquipmentData = $this->doSnakeCase($row);
                         $keys = array_keys($EquipmentData);
+
+                        //echo '<pre>'; print_r($EquipmentData); echo '</pre>';
                         
                         //echo $keys[0]; // It will echo first key of the array.
                         // echo '<pre>'; print_r(reset($EquipmentData)); echo '</pre>';
@@ -305,6 +313,8 @@ class EquipmentController extends Controller
                             {
                                 $ele_ststus = '2';
                             }
+                            $EquipmentData['title='] = array_values($EquipmentData['title=']);
+
                             $equipment = Equipment::find($checkEquipment->id);
                             $equipment->inventory_id = $request->route('id');
                             $equipment->title = ucwords(reset($EquipmentData));
@@ -373,9 +383,17 @@ class EquipmentController extends Controller
         foreach ($array as $key => $value) 
         {
             $keyExists = $this->keyExistsCase($key, $value);
+            $col = $this->getcfID($key);
+            // echo '<pre>';
+            // print_r($col);
+            // echo '</pre>';
+            $key = str_replace(' ', '-', $key); // Replaces all spaces with hyphens.
+            $key = preg_replace('/[^A-Za-z0-9\-]/', '', $key); // Removes special chars.
+            $key = strtolower(preg_replace('/-+/', '-', $key));
+    
+           $key = rtrim($key, '-'); 
+           $key = $key.'='.$col;
 
-            $key = strtolower(str_replace( ' ', '_', $key));
- 
             $result[$key] = $value;
         }
 
@@ -415,6 +433,16 @@ class EquipmentController extends Controller
         }
         
         return $result;
+    }
+
+    private function getcfID($ID)
+    {
+        $cf = Taxonomy::where('name', $ID)->where('status', '1')->first();
+        if(!empty($cf))
+        {
+            return $cf->id;
+        }
+        
     }
 
 }

@@ -130,15 +130,9 @@ Route::get('logout', [
             Route::patch('/taxonomy/{id}/data/update/{tdid}', 'Backend\TaxonomyDataController@update')->name('taxonomyData.update');
             Route::delete('/taxonomy/{id}/data/delete/{tdid}', 'Backend\TaxonomyDataController@destroy')->name('taxonomyData.destroy');
 
-            Route::get('/work_order/report/{id}', 'Backend\ReportController@index')->name('work_order.report');
-
-            // Route::get('/', 'PostsController@index')->name('posts.index');
-            // Route::get('/create', 'PostsController@create')->name('posts.create');
-            // Route::post('/create', 'PostsController@store')->name('posts.store');
-            // Route::get('/{post}/show', 'PostsController@show')->name('posts.show');
-            // Route::get('/{post}/edit', 'PostsController@edit')->name('posts.edit');
-            // Route::patch('/{post}/update', 'PostsController@update')->name('posts.update');
-            // Route::delete('/{post}/delete', 'PostsController@destroy')->name('posts.destroy');
+            Route::get('/employees/report', 'Backend\ReportController@employees_report')->name('employees.report');
+            Route::get('/equipment/report', 'Backend\ReportController@equipment_report')->name('equipment.report');
+            Route::get('/work-order-status/report', 'Backend\ReportController@work_order_status')->name('work_order.report');
         });
 
         

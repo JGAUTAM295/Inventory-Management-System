@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 29, 2022 at 02:01 PM
+-- Generation Time: Jun 30, 2022 at 03:08 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.28
 
@@ -45,8 +45,7 @@ CREATE TABLE `equipment` (
 --
 
 INSERT INTO `equipment` (`id`, `user_id`, `inventory_id`, `title`, `equipment_info`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 'CHILLER', '{\"title\":\"CHILLER\",\"type\":\"CHILLER\",\"asset_#\":\"vfgdfg\",\"asset_tag\":\"hjghj\",\"site_(aaa)\":\"Air Side\",\"aaa_(maximo)_location\":\"jghjghj\",\"location\":\"U1-20\",\"assets_type\":\"FUTUR\",\"asset_description_(maximo)\":\"jghjghj\",\"asset_description\":\"hgjgh\",\"parent_of_assets_clarification\":\"hgjghj\",\"asset_class_(maximo)\":\"jhg\",\"vendor\\/supplier\":\"CHS\",\"manufacturer\":\"MULTI AQUA\",\"year_made\":\"2008\",\"model_#\":\"dfgf\",\"serial_#\":\"dfgdfgdfg\",\"cost_(afl.)\":\"1000\",\"installation_date\":\"06\\/27\\/2022\",\"expected_life_(years)\":\"6\",\"subcontracto\":\"CHS\",\"status\":\"Deactive\"}', 2, 1, NULL, '2022-06-28 02:13:03', '2022-06-28 02:13:03'),
-(2, 1, 3, 'CEILING FAN', '{\"title\":\"CEILING FAN\",\"type\":\"CEILING FAN\",\"asset_#\":\"ffgdfg\",\"asset_tag\":\"fgdfg\",\"site_(aaa)\":\"Land Side\",\"aaa_(maximo)_location\":\"fdfdf\",\"location\":\"U1-07\",\"assets_type\":\"JK\",\"asset_description_(maximo)\":\"fgh\",\"asset_description\":\"iyuiyu\",\"parent_of_assets_clarification\":\"llkk\",\"asset_class_(maximo)\":\"hfgh\",\"vendor\\/supplier\":\"CHS\",\"manufacturer\":\"J&D\",\"year_made\":\"2009\",\"model_#\":\"gdg\",\"serial_#\":\"rtyyuyu\",\"cost_(afl.)\":\"2000\",\"installation_date\":\"06\\/28\\/2022\",\"expected_life_(years)\":\"9\",\"subcontracto\":\"CHS\",\"status\":\"Active\"}', 1, 1, NULL, '2022-06-28 02:13:03', '2022-06-28 02:13:03');
+(4, 2, 5, 'CHiler', '{\"type=1\":\"CHILLER\",\"asset=10\":\"dsfd\",\"asset-tag=11\":\"sdsd\",\"site-aaa=2\":\"Land\",\"aaa-maximo-location=9\":\"fsdfs\",\"location=3\":\"U1-21\",\"assets-type=4\":\"FUTUR\",\"asset-description-maximo=12\":\"gfgdf\",\"asset-description=13\":\"fgdf\",\"parent-of-assets-clarification=14\":\"dgd\",\"asset-class-maximo=15\":\"dfgdf\",\"vendorsupplier=5\":\"CHS\",\"manufacturer=6\":\"CARRIER\",\"year-made=16\":\"2019\",\"model=17\":\"gfd76765765\",\"serial=18\":\"gdfg54546\",\"cost-afl=19\":\"1000\",\"installation-date=20\":\"07\\/02\\/2022\",\"expected-life-years=21\":\"10\",\"subcontracto=7\":\"CHS\",\"description=22\":\"ghfghfghfgh\"}', 1, 2, 2, '2022-06-30 05:41:43', '2022-06-30 05:41:49');
 
 -- --------------------------------------------------------
 
@@ -88,7 +87,9 @@ INSERT INTO `file_logs` (`id`, `filename`, `status`, `created_by`, `updated_by`,
 (1, 'dmart_equipments_1656334693_892455852.csv', 2, 1, NULL, '2022-06-28 00:44:11', '2022-06-28 00:44:11'),
 (2, 'dmart_equipments_1656398361_342389006.csv', 2, 1, NULL, '2022-06-28 01:09:35', '2022-06-28 01:09:35'),
 (3, 'dmart_equipments_1656398361_342389006.csv', 1, 1, NULL, '2022-06-28 01:12:09', '2022-06-28 01:12:09'),
-(4, 'dmart_equipments_1656398361_342389006.csv', 1, 1, NULL, '2022-06-28 02:13:03', '2022-06-28 02:13:03');
+(4, 'dmart_equipments_1656398361_342389006.csv', 1, 1, NULL, '2022-06-28 02:13:03', '2022-06-28 02:13:03'),
+(5, 'dmart_equipments_1656577341_890643362.csv', 1, 1, NULL, '2022-06-30 03:08:58', '2022-06-30 03:08:58'),
+(6, 'dmart_equipments_1656577341_890643362.csv', 1, 1, NULL, '2022-06-30 03:22:12', '2022-06-30 03:22:12');
 
 -- --------------------------------------------------------
 
@@ -112,8 +113,7 @@ CREATE TABLE `inventories` (
 --
 
 INSERT INTO `inventories` (`id`, `user_id`, `name`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 'BigBasketMart', 1, 1, 1, '2022-06-23 06:31:46', '2022-06-23 06:40:09'),
-(3, 1, 'DMart', 1, 1, NULL, '2022-06-23 06:45:24', '2022-06-23 06:45:24');
+(5, 2, 'Vmart', 1, 2, NULL, '2022-06-30 05:40:39', '2022-06-30 05:40:39');
 
 -- --------------------------------------------------------
 
@@ -183,6 +183,7 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (2, 'App\\Models\\User', 1),
 (3, 'App\\Models\\User', 6),
 (3, 'App\\Models\\User', 7),
+(3, 'App\\Models\\User', 9),
 (4, 'App\\Models\\User', 3),
 (4, 'App\\Models\\User', 4),
 (4, 'App\\Models\\User', 5),
@@ -199,6 +200,20 @@ CREATE TABLE `password_resets` (
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('sachin@gmail.com', '$2y$10$GiObgYyFJ4PiYAO.oB/2Ne8hL9OegVE23af1fBT5rHGISnijQs.pm', '2022-06-30 06:35:46'),
+('sachin@gmail.com', '6JcTJtcXlADfuNw7Rd0l1TGDy0RmfejZfXgeX2BKgHQjUpxo5T4q7FLzB3VR3uHg', '2022-06-30 06:40:10'),
+('jyoti.610weblab@gmail.com', 'DcB5MgfA3LI6no6CAsXD18bwGLLeEKjXqts0eurT9BnUDiOneEDAtYSOlCddwCfH', '2022-06-30 06:40:42'),
+('jyoti.610weblab@gmail.com', '3rngJHgEua8y9Fsvl8ZP1Rbqef1ep8me6zX8nZHgJ3TKwtyuooiYYLybev6YV0jl', '2022-06-30 06:54:30'),
+('jyoti.610weblab@gmail.com', '43eAV8toJ8hmyBo1pZLvyPtfqWPM3yypGYxAPXjljUnvJWmkvlOBgiBfpy38TCRU', '2022-06-30 07:06:06'),
+('jyoti.610weblab@gmail.com', 'Ij6UHiMdvwXCrwnW9cTQwq9bARradi14gru14IEGyZofwI5kPgD1NNGKMifNCC3I', '2022-06-30 07:06:31'),
+('jyoti.610weblab@gmail.com', '2a4NKe9e4hjVgRXkyF10BvZcDUgxbTthZem9ZatSrHgIfgeVTxNVmWTaBd4bDjUf', '2022-06-30 07:08:57'),
+('jyoti.610weblab@gmail.com', 'xgYjLSJfwxzeXmeotxl5nvNXSPT5FYuPXZBnUAOR1JJ4EwqhQgDnjPM4M5svPdhJ', '2022-06-30 07:09:04');
 
 -- --------------------------------------------------------
 
@@ -294,7 +309,9 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (81, 'clientUser', 'web', '2022-06-28 06:08:21', '2022-06-28 06:08:21'),
 (82, 'staffsUser', 'web', '2022-06-28 06:08:21', '2022-06-28 06:08:21'),
 (83, 'user.profile', 'web', '2022-06-29 00:52:21', '2022-06-29 00:52:21'),
-(84, 'authRemove', 'web', '2022-06-29 01:30:10', '2022-06-29 01:30:10');
+(84, 'authRemove', 'web', '2022-06-29 01:30:10', '2022-06-29 01:30:10'),
+(85, 'employees.report', 'web', '2022-06-30 00:48:53', '2022-06-30 00:48:53'),
+(86, 'equipment.report', 'web', '2022-06-30 00:48:53', '2022-06-30 00:48:53');
 
 -- --------------------------------------------------------
 
@@ -406,35 +423,65 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (30, 2),
 (30, 3),
 (32, 2),
+(33, 1),
 (33, 2),
+(34, 1),
 (34, 2),
+(35, 1),
 (35, 2),
+(36, 1),
 (36, 2),
+(37, 1),
 (37, 2),
+(38, 1),
 (38, 2),
+(39, 1),
 (39, 2),
+(47, 1),
 (47, 2),
+(48, 1),
 (48, 2),
+(49, 1),
 (49, 2),
+(50, 1),
 (50, 2),
+(51, 1),
 (51, 2),
+(52, 1),
 (52, 2),
+(53, 1),
 (53, 2),
+(54, 1),
 (54, 2),
+(55, 1),
 (55, 2),
+(56, 1),
 (56, 2),
+(57, 1),
 (57, 2),
+(58, 1),
 (58, 2),
+(59, 1),
 (59, 2),
+(60, 1),
 (60, 2),
+(61, 1),
 (61, 2),
+(62, 1),
 (62, 2),
+(63, 1),
 (63, 2),
+(64, 1),
 (64, 2),
+(65, 1),
 (65, 2),
+(66, 1),
 (66, 2),
+(67, 1),
 (67, 2),
+(68, 1),
 (68, 2),
+(69, 1),
 (69, 2),
 (70, 2),
 (70, 4),
@@ -447,7 +494,9 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (75, 2),
 (75, 4),
 (76, 2),
+(77, 1),
 (77, 2),
+(78, 1),
 (78, 2),
 (79, 2),
 (80, 2),
@@ -460,7 +509,9 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (84, 1),
 (84, 2),
 (84, 3),
-(84, 4);
+(84, 4),
+(85, 2),
+(86, 2);
 
 -- --------------------------------------------------------
 
@@ -471,6 +522,7 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 CREATE TABLE `taxonomies` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `input_field_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `input_required` tinyint(4) DEFAULT NULL,
   `order_no` bigint(255) DEFAULT NULL,
@@ -485,27 +537,27 @@ CREATE TABLE `taxonomies` (
 -- Dumping data for table `taxonomies`
 --
 
-INSERT INTO `taxonomies` (`id`, `name`, `input_field_type`, `input_required`, `order_no`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'Type', 'Select', 1, 1, 1, 1, 1, '2022-06-23 23:20:42', '2022-06-24 04:34:17'),
-(2, 'Site (AAA)', 'Select', 1, 4, 1, 1, 1, '2022-06-23 23:22:47', '2022-06-24 04:35:48'),
-(3, 'Location', 'Select', 1, 6, 1, 1, 1, '2022-06-23 23:23:02', '2022-06-24 04:36:50'),
-(4, 'Assets Type', 'Select', 0, 7, 1, 1, 1, '2022-06-23 23:23:16', '2022-06-24 04:37:03'),
-(5, 'Vendor/Supplier', 'Select', 1, 12, 1, 1, 1, '2022-06-23 23:23:31', '2022-06-24 04:38:17'),
-(6, 'Manufacturer', 'Select', 1, 13, 1, 1, 1, '2022-06-23 23:23:44', '2022-06-24 04:38:27'),
-(7, 'Subcontracto', 'Select', 1, 20, 1, 1, 1, '2022-06-23 23:24:01', '2022-06-24 04:40:17'),
-(9, 'AAA (MAXIMO) LOCATION', 'Text', 0, 5, 1, 1, 1, '2022-06-24 01:28:34', '2022-06-24 04:36:06'),
-(10, 'Asset #', 'Text', 0, 2, 1, 1, 1, '2022-06-24 01:42:55', '2022-06-24 04:34:45'),
-(11, 'Asset Tag', 'Text', 0, 3, 1, 1, 1, '2022-06-24 02:15:04', '2022-06-24 04:35:20'),
-(12, 'Asset description (MAXIMO)', 'Textarea', 0, 8, 1, 1, 1, '2022-06-24 02:16:06', '2022-06-24 04:37:15'),
-(13, 'Asset description', 'Text', 0, 9, 1, 1, 1, '2022-06-24 02:17:17', '2022-06-24 04:37:31'),
-(14, 'Parent of Assets Clarification', 'Text', 0, 10, 1, 1, 1, '2022-06-24 02:17:36', '2022-06-24 04:37:43'),
-(15, 'ASSET CLASS (MAXIMO)', 'Text', 0, 11, 1, 1, 1, '2022-06-24 02:18:18', '2022-06-24 04:37:52'),
-(16, 'Year Made', 'Text', 0, 14, 1, 1, 1, '2022-06-24 02:18:53', '2022-06-24 04:38:35'),
-(17, 'Model #', 'Text', 0, 15, 1, 1, 1, '2022-06-24 02:19:08', '2022-06-24 04:38:46'),
-(18, 'Serial #', 'Text', 1, 16, 1, 1, 1, '2022-06-24 02:19:36', '2022-06-24 04:38:56'),
-(19, 'Cost (Afl.)', 'Number', 0, 17, 1, 1, 1, '2022-06-24 02:19:47', '2022-06-27 07:11:26'),
-(20, 'Installation Date', 'Date', 0, 18, 1, 1, 1, '2022-06-24 02:20:43', '2022-06-24 04:39:31'),
-(21, 'Expected Life (Years)', 'Text', 0, 19, 1, 1, 1, '2022-06-24 02:21:01', '2022-06-24 04:39:39');
+INSERT INTO `taxonomies` (`id`, `name`, `slug`, `input_field_type`, `input_required`, `order_no`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'Type', 'type', 'Select', 1, 1, 1, 1, 1, '2022-06-23 23:20:42', '2022-06-30 02:07:39'),
+(2, 'Site (AAA)', 'site-aaa', 'Select', 1, 4, 1, 1, 1, '2022-06-23 23:22:47', '2022-06-30 02:07:34'),
+(3, 'Location', 'location', 'Select', 1, 6, 1, 1, 1, '2022-06-23 23:23:02', '2022-06-30 02:07:29'),
+(4, 'Assets Type', 'assets-type', 'Select', 0, 7, 1, 1, 1, '2022-06-23 23:23:16', '2022-06-30 02:12:03'),
+(5, 'Vendor/Supplier', 'vendorsupplier', 'Select', 1, 12, 1, 1, 1, '2022-06-23 23:23:31', '2022-06-30 02:07:25'),
+(6, 'Manufacturer', 'manufacturer', 'Select', 1, 13, 1, 1, 1, '2022-06-23 23:23:44', '2022-06-30 02:07:19'),
+(7, 'Subcontracto', 'subcontracto', 'Select', 1, 20, 1, 1, 1, '2022-06-23 23:24:01', '2022-06-30 02:07:12'),
+(9, 'AAA (MAXIMO) LOCATION', 'aaa-maximo-location', 'Text', 0, 5, 1, 1, 1, '2022-06-24 01:28:34', '2022-06-30 02:07:06'),
+(10, 'Asset #', 'asset', 'Text', 0, 2, 1, 1, 1, '2022-06-24 01:42:55', '2022-06-30 02:25:01'),
+(11, 'Asset Tag', 'asset-tag', 'Text', 0, 3, 1, 1, 1, '2022-06-24 02:15:04', '2022-06-30 02:06:58'),
+(12, 'Asset description (MAXIMO)', 'asset-description-maximo', 'Textarea', 0, 8, 1, 1, 1, '2022-06-24 02:16:06', '2022-06-30 02:06:42'),
+(13, 'Asset description', 'asset-description', 'Text', 0, 9, 1, 1, 1, '2022-06-24 02:17:17', '2022-06-30 02:06:39'),
+(14, 'Parent of Assets Clarification', 'parent-of-assets-clarification', 'Text', 0, 10, 1, 1, 1, '2022-06-24 02:17:36', '2022-06-30 02:06:35'),
+(15, 'ASSET CLASS (MAXIMO)', 'asset-class-maximo', 'Text', 0, 11, 1, 1, 1, '2022-06-24 02:18:18', '2022-06-30 02:06:30'),
+(16, 'Year Made', 'year-made', 'Text', 0, 14, 1, 1, 1, '2022-06-24 02:18:53', '2022-06-30 02:06:24'),
+(17, 'Model #', 'model', 'Text', 0, 15, 1, 1, 1, '2022-06-24 02:19:08', '2022-06-30 02:14:36'),
+(18, 'Serial #', 'serial', 'Text', 1, 16, 1, 1, 1, '2022-06-24 02:19:36', '2022-06-30 02:14:46'),
+(19, 'Cost (Afl.)', 'cost-afl', 'Number', 0, 17, 1, 1, 1, '2022-06-24 02:19:47', '2022-06-30 02:06:09'),
+(20, 'Installation Date', 'installation-date', 'Date', 0, 18, 1, 1, 1, '2022-06-24 02:20:43', '2022-06-30 02:06:05'),
+(21, 'Expected Life (Years)', 'expected-life-years', 'Text', 0, 19, 1, 1, 1, '2022-06-24 02:21:01', '2022-06-30 04:02:21');
 
 -- --------------------------------------------------------
 
@@ -580,7 +632,11 @@ INSERT INTO `taxonomy_data` (`id`, `taxonomy_id`, `name`, `status`, `created_by`
 (50, 1, 'UV-FILTER - EXSITING', 1, 1, NULL, '2022-06-24 01:04:45', '2022-06-24 01:04:45'),
 (51, 1, 'UV-FILTER - NEW', 1, 1, NULL, '2022-06-24 01:04:54', '2022-06-24 01:04:54'),
 (52, 1, 'VAR. FREQ. DRIVE', 1, 1, 1, '2022-06-24 01:05:09', '2022-06-24 01:16:50'),
-(53, 4, 'JK', 1, 1, NULL, '2022-06-28 02:13:03', '2022-06-28 02:13:03');
+(53, 4, 'JK', 1, 1, NULL, '2022-06-28 02:13:03', '2022-06-28 02:13:03'),
+(54, 3, 'U1-28', 1, 1, NULL, '2022-06-29 07:41:46', '2022-06-29 07:41:46'),
+(55, 3, 'U1-22', 1, 1, NULL, '2022-06-30 03:03:31', '2022-06-30 03:03:31'),
+(56, 7, 'J&D', 1, 1, NULL, '2022-06-30 03:03:31', '2022-06-30 03:03:31'),
+(57, 7, 'SES', 1, 2, NULL, '2022-06-30 05:42:05', '2022-06-30 05:42:05');
 
 -- --------------------------------------------------------
 
@@ -611,13 +667,15 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `image`, `remember_token`, `permissionid`, `status`, `deleted_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (1, 'SuperAdmin', 'jyoti.610weblab@gmail.com', NULL, '$2y$10$mjuoGReNxtHNgDsgaoW8zuMK9LbjEQesmcCos45aGn/A6bwfwN5eW', 'avatar2.png_1656483160.png', NULL, 1, 1, NULL, NULL, 1, '2022-06-23 02:37:41', '2022-06-29 00:42:40'),
-(2, 'Admin', 'admin@gmail.com', NULL, '$2y$10$py6DGlIAEuY1K0RLhaU.k.Fpn9mXWhpkqcs7gCFdwib5CkiojJYvO', 'avatar.png_1656483140.png', NULL, 1, 1, NULL, NULL, 1, '2022-06-23 04:09:09', '2022-06-29 00:42:20'),
+(2, 'Admin', 'admin@gmail.com', NULL, '$2y$10$VseD2y93UMRgObkxY0jad.P1zDV1k7sD9ZQ1peIh32Y4Zg8K4AgLu', 'avatar.png_1656483140.png', NULL, 1, 1, NULL, NULL, 1, '2022-06-23 04:09:09', '2022-06-30 05:33:39'),
 (3, 'Nick', 'nick@gmail.com', NULL, '$2y$10$hTb1GpysrTERzj/0lWX9DOALgdQfNfKXzURNxZT7kRLaImhSZXd8S', 'avatar4.png_1656483131.png', NULL, NULL, 1, '2022-06-29 02:34:55', NULL, 1, '2022-06-27 01:49:58', '2022-06-29 02:34:55'),
 (4, 'Ele', 'ele@gmail.com', NULL, '$2y$10$XRC/kX51O5qCDOuDqKLo/eEDwPSrx4zm5SJupvPx/r0JghVbdfBbS', 'avatar3.png_1656483113.png', NULL, NULL, 1, '2022-06-29 01:41:59', NULL, 1, '2022-06-27 01:53:37', '2022-06-29 01:41:59'),
 (5, 'Mick', 'mick@gmail.com', NULL, '$2y$10$OMVPW2oFq5h3zCRpNlZB2uqpb5iaSLQLPD4BZINDJM9Y00EhwmQme', 'avatar5.png_1656486781.png', NULL, NULL, 1, '2022-06-29 01:43:29', NULL, 1, '2022-06-29 01:43:01', '2022-06-29 01:43:29'),
 (6, 'Rahul', 'rahul@gmail.com', NULL, '$2y$10$Rs56cvXtL7tE4jMTdnIC7OOpfnN98C/qjhHNi395j9wphRmqW39bO', 'avatar5.png_1656489475.png', NULL, NULL, 1, NULL, NULL, 1, '2022-06-29 02:27:55', '2022-06-29 02:27:55'),
 (7, 'Yogesh', 'yogesh@gmail.com', NULL, '$2y$10$DLglPsQXdKjSYozgrZ.Pq.xojOxU4OwBzQfuLDWf40YumJmc3LfHW', 'avatar.png_1656489854.png', NULL, NULL, 1, NULL, NULL, 1, '2022-06-29 02:34:14', '2022-06-29 02:34:14'),
-(8, 'Sachin', 'sachin@gmail.com', NULL, '$2y$10$WMGKCrAgHJ55ZohaMjU.1.moCbvamabX/GJZyxhC3DX4DodCmwzMK', 'avatar4.png_1656489882.png', NULL, NULL, 1, NULL, NULL, 1, '2022-06-29 02:34:42', '2022-06-29 02:34:42');
+(8, 'Sachin', 'sachin@gmail.com', NULL, '$2y$10$eKB5xi4V4q.Er62pM4/4Guv6R6zmW17gv9FcPQMnW.RSmzZwYjabS', 'avatar4.png_1656489882.png', NULL, NULL, 1, NULL, NULL, 1, '2022-06-29 02:34:42', '2022-06-30 07:27:38'),
+(9, 'sandeep', 'sandeep@gmail.com', NULL, '$2y$10$FJP7f.Ea1jW1Vsynl3r8e.nqsyPccdGd4bDK5zZUkLI/lG7EUqjqq', 'user8-128x128.jpg_1656508235.jpg', NULL, NULL, 1, NULL, NULL, 1, '2022-06-29 07:40:35', '2022-06-29 07:40:35'),
+(11, 'Sunita', 'sunita@gmail.com', NULL, '$2y$10$BRAvyORx0pdNoSA2q7dwpOQEWWCWyAdIdjf/totTFihw6flfykzmu', 'user4-128x128.jpg_1656583154.jpg', NULL, NULL, 1, NULL, NULL, 11, '2022-06-30 04:29:14', '2022-06-30 04:29:14');
 
 -- --------------------------------------------------------
 
@@ -669,7 +727,7 @@ CREATE TABLE `work_orders` (
 --
 
 INSERT INTO `work_orders` (`id`, `user_id`, `title`, `description`, `staff_id`, `client_id`, `orderdate`, `start_date`, `end_date`, `status`, `created_by`, `updated_by`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Test Order', 'Lorem ipsum represents a long-held tradition for designers, typographers and the like. Some people hate it and argue for its demise, but others ignore the hate as they create awesome tools to help create filler text for everyone from bacon lovers to Charlie Sheen fans.', 8, 7, '2022-06-29 10:13:56', '1970-01-01 06:30:00', '1970-01-01 06:30:00', 3, 1, 1, NULL, '2022-06-29 04:40:37', '2022-06-29 04:43:56');
+(1, 1, 'Test Order', 'Lorem ipsum represents a long-held tradition for designers, typographers and the like. Some people hate it and argue for its demise, but others ignore the hate as they create awesome tools to help create filler text for everyone from bacon lovers to Charlie Sheen fans.', 8, 7, '2022-06-30 10:52:07', '1970-01-01 06:30:00', '1970-01-01 06:30:00', 3, 1, 1, NULL, '2022-06-29 04:40:37', '2022-06-30 04:39:47');
 
 -- --------------------------------------------------------
 
@@ -844,7 +902,7 @@ ALTER TABLE `work_order_images`
 -- AUTO_INCREMENT for table `equipment`
 --
 ALTER TABLE `equipment`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -856,13 +914,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `file_logs`
 --
 ALTER TABLE `file_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `inventories`
 --
 ALTER TABLE `inventories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -874,13 +932,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -892,19 +950,19 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `taxonomies`
 --
 ALTER TABLE `taxonomies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `taxonomy_data`
 --
 ALTER TABLE `taxonomy_data`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `usersbkup`

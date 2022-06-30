@@ -84,7 +84,7 @@
                   <thead>
                   <tr>
                     <th>No</th>
-                    <th>Type</th>
+                    <th>Title</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -94,13 +94,7 @@
                     @foreach($equipments as $key => $equipment)
                   <tr>
                     <td>{{ $key+1 }}</td>
-                    <td>
-                      @foreach(json_decode($equipment->equipment_info, true) as $key => $value)
-                      @if ($key == 'type') 
-                      {{ucwords($value) ?? ''}}
-                      @endif
-                      @endforeach
-                    </td>
+                    <td>{{ucwords($equipment->title) ?? ''}}</td>
                     <td class="project-state"> @if($equipment->status == '1') <span class="badge badge-success">Active</span>@elseif($equipment->status == '2') <span class="badge badge-danger">Deactive</span>@endif</td>
                     <td class="project-actions">
                       <a class="btn btn-secondary btn-sm" href="{{route('equipment.getQRCode',['id'=>$inventory->id,'eid'=>$equipment->id])}}" target="_blank">
