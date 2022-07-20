@@ -1,0 +1,4 @@
+[07-Jul-2022 05:44:59 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 65015808 bytes) in /home/vljjgcrj/public_html/iems/app/Http/Controllers/Backend/WorkOrderController.php on line 84
+[07-Jul-2022 11:23:49 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 98570240 bytes) in /home/vljjgcrj/public_html/iems/app/Http/Controllers/Auth/LoginController.php on line 56
+[19-Jul-2022 11:32:57 Asia/Calcutta] PHP Fatal error:  Cannot use Validator as Validator because the name is already in use in /home/vljjgcrj/public_html/iems/app/Http/Controllers/API/StaffController.php on line 16
+[19-Jul-2022 16:15:44 Asia/Calcutta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 98570240 bytes) in /home/vljjgcrj/public_html/iems/app/Http/Controllers/Backend/DashboardController.php on line 687
